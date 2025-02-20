@@ -1,0 +1,190 @@
+from flask import Blueprint, render_template, request, jsonify, current_app
+from app.models import Template, Printer, PrintHistory
+from app.utils import read_file_data, send_to_printer, replace_variables
+from app import db
+import requests
+import json
+from werkzeug.utils import secure_filename
+import os
+
+main_bp = Blueprint('main', __name__)
+
+@main_bp.route('/')
+def index():
+    """Page principale de l'application"""
+    return render_template('index.html')
+
+@main_bp.route('/api/templates', methods=['GET', 'POST', 'DELETE'])
+def handle_templates():
+    """Gestion des modèles ZPL"""
+    if request.method == 'POST':
+        data = request.json
+        template = Template(
+            name=data['name'],
+            zpl_code=data['zpl_code'],
+            variables_count=data['variables_count'],
+            width=data['width'],
+            height=data['height'],
+            dpmm=data['dpmm']
+        )
+        db.session.add(template)
+        db.session.commit()
+        return jsonify({"id": template.id, "message": "Modèle créé avec succès"})
+    
+    templates = Template.query.all()
+    return jsonify([{
+        "id": t.id,
+        "name": t.name,
+        "variables_count": t.variables_count,
+        "width": t.width,
+        "height": t.height,
+        "dpmm": t.dpmm,
+        "zpl_code": t.zpl_code
+    } for t in templates])
+
+@main_bp.route('/api/preview', methods=['POST'])
+def preview_label():
+    """Prévisualisation d'une étiquette via l'API Labelary"""
+    data = request.json
+    
+    if not data:
+        return jsonify({"success": False, "error": "Données manquantes"}), 400
+
+    # Récupération du template et de ses paramètres
+    template_id = data.get('template_id')
+    if not template_id:
+        return jsonify({"success": False, "error": "ID du template manquant"}), 400
+
+    template = Template.query.get_or_404(template_id)
+    zpl = template.zpl_code
+    dpmm = template.dpmm
+    width = template.width
+    height = template.height
+
+    # Remplacement des variables si présentes
+    if 'data' in data:
+        zpl = replace_variables(zpl, data['data'])
+    
+    try:
+        response = requests.post(
+            f'http://api.labelary.com/v1/printers/{dpmm}dpmm/labels/{width}x{height}/0/',
+            headers={'Accept': 'image/png'},
+            data=zpl.encode('utf-8')
+        )
+        if response.status_code == 200:
+            return jsonify({
+                "success": True,
+                "image": response.content.decode('latin1')
+            })
+        return jsonify({
+            "success": False,
+            "error": "Erreur lors de la génération de l'aperçu"
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        })
+
+@main_bp.route('/api/templates/<int:template_id>', methods=['DELETE'])
+def delete_template(template_id):
+    """Suppression d'un modèle"""
+    template = Template.query.get_or_404(template_id)
+    db.session.delete(template)
+    db.session.commit()
+    return jsonify({"success": True, "message": "Modèle supprimé avec succès"})
+
+@main_bp.route('/api/printers', methods=['GET', 'POST', 'DELETE'])
+def handle_printers():
+    """Gestion des imprimantes"""
+    if request.method == 'POST':
+        data = request.json
+        printer = Printer(
+            name=data['name'],
+            ip_address=data['ip_address'],
+            port=data.get('port', 9100)
+        )
+        db.session.add(printer)
+        db.session.commit()
+        return jsonify({"id": printer.id, "message": "Imprimante ajoutée avec succès"})
+    
+    printers = Printer.query.all()
+    return jsonify([{
+        "id": p.id,
+        "name": p.name,
+        "ip_address": p.ip_address,
+        "port": p.port,
+        "status": p.status
+    } for p in printers])
+
+@main_bp.route('/api/printers/<int:printer_id>', methods=['DELETE'])
+def delete_printer(printer_id):
+    """Suppression d'une imprimante"""
+    printer = Printer.query.get_or_404(printer_id)
+    db.session.delete(printer)
+    db.session.commit()
+    return jsonify({"success": True, "message": "Imprimante supprimée avec succès"})
+
+@main_bp.route('/api/upload', methods=['POST'])
+def upload_file():
+    """Traitement des fichiers CSV/Excel"""
+    if 'file' not in request.files:
+        return jsonify({"error": "Aucun fichier n'a été envoyé"}), 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "Aucun fichier n'a été sélectionné"}), 400
+    
+    if not (file.filename.endswith('.csv') or file.filename.endswith('.xlsx') or file.filename.endswith('.xls')):
+        return jsonify({"error": "Format de fichier non supporté"}), 400
+    
+    try:
+        headers, rows = read_file_data(file)
+        return jsonify({
+            "success": True,
+            "headers": headers,
+            "rows": rows
+        })
+    except Exception as e:
+        return jsonify({"error": f"Erreur lors du traitement du fichier: {str(e)}"}), 500
+
+@main_bp.route('/api/print', methods=['POST'])
+def print_label():
+    """Impression d'étiquettes"""
+    data = request.json
+    template_id = data['template_id']
+    printer_id = data['printer_id']
+    print_data = data['data']
+    copies = data.get('copies', 1)
+    
+    template = Template.query.get_or_404(template_id)
+    printer = Printer.query.get_or_404(printer_id)
+    
+    # Génération du ZPL avec les variables remplacées
+    zpl = replace_variables(template.zpl_code, print_data)
+    
+    # Tentative d'impression
+    success = send_to_printer(printer.ip_address, printer.port, zpl)
+    
+    if not success:
+        return jsonify({
+            "success": False,
+            "message": "Erreur lors de l'envoi à l'imprimante"
+        }), 500
+    
+    # Enregistrement dans l'historique
+    history = PrintHistory(
+        template_id=template_id,
+        printer_id=printer_id,
+        print_data=print_data,
+        copies=copies,
+        status='completed' if success else 'failed'
+    )
+    db.session.add(history)
+    db.session.commit()
+    
+    return jsonify({
+        "success": True,
+        "message": "Impression envoyée avec succès",
+        "history_id": history.id
+    })

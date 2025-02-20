@@ -1,0 +1,224 @@
+/* Styles généraux */
+.table-container {
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+/* Zone de glisser-déposer */
+.file-upload-zone {
+    border: 2px dashed #dbdbdb;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.file-upload-zone:hover,
+.file-upload-zone.is-dragover {
+    border-color: #00d1b2;
+    background-color: rgba(0, 209, 178, 0.05);
+}
+
+.file-upload-zone .icon {
+    color: #dbdbdb;
+    transition: color 0.3s ease;
+}
+
+.file-upload-zone:hover .icon,
+.file-upload-zone.is-dragover .icon {
+    color: #00d1b2;
+}
+
+/* Liste des modèles */
+#templatesList .menu-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+#templatesList .menu-list a:hover {
+    background-color: #f5f5f5;
+}
+
+#templatesList .menu-list a.is-active {
+    background-color: #00d1b2;
+    color: white;
+}
+
+#templatesList .menu-list a.is-active .icon {
+    color: white;
+}
+
+#templatesList .menu-list a .template-actions {
+    display: flex;
+    align-items: center;
+}
+
+#templatesList .menu-list a .icon {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* Liste des imprimantes */
+.printer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #dbdbdb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.printer-item:hover {
+    background-color: #f5f5f5;
+}
+
+.printer-item.is-active {
+    background-color: #00d1b2;
+    color: white;
+}
+
+.printer-item.is-active .printer-status {
+    color: white;
+}
+
+.printer-item:last-child {
+    border-bottom: none;
+}
+
+.printer-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.printer-status {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.delete-printer {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.delete-printer:hover {
+    opacity: 1;
+}
+
+.printer-item .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.printer-item .status-indicator.is-connected {
+    background-color: #48c774;
+}
+
+.printer-item .status-indicator.is-disconnected {
+    background-color: #f14668;
+}
+
+/* Modals */
+.modal-card {
+    max-width: 800px;
+    width: 90%;
+}
+
+#previewModal .modal-card-body {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+#previewImage {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: white;
+}
+
+#previewZPL {
+    font-family: monospace;
+    font-size: 0.9em;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+#previewError {
+    margin-top: 1rem;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+/* Tableau des données */
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.table td .button {
+    margin: 0 0.15rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    padding: 0;
+}
+
+.table td .button .icon {
+    margin: 0 !important;
+}
+
+.table td .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.15rem;
+    min-width: 60px;
+}
+
+.table tr {
+    height: 2rem;
+}
+
+.table td {
+    padding: 0.25em 0.5em;
+}
+
+/* Style pour la case à cocher "tout sélectionner" */
+.table th input[type="checkbox"],
+.table td input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.table th:first-child,
+.table td:first-child {
+    width: 35px;
+    text-align: center;
+}
+
+.table th:last-child,
+.table td:last-child {
+    width: 100px;
+    text-align: right;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .columns {
+        margin: 0;
+    }
+    
+    .column {
+        padding: 0.75rem;
+    }
+    
+    .modal-card {
+        margin: 0 1rem;
+    }
+}

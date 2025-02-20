@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV2ZebraLabel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- En-tête -->
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <strong>CSV2ZebraLabel</strong>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- Zone d'import de fichiers -->
+                <div class="column is-4">
+                    <div class="box">
+                        <h2 class="title is-4">Import de données</h2>
+                        <div class="file-upload-zone has-text-centered p-6 mb-4" id="dropZone">
+                            <span class="icon is-large">
+                                <i class="fas fa-file-upload fa-2x"></i>
+                            </span>
+                            <p class="mt-2">Glissez votre fichier CSV/Excel ici<br>ou</p>
+                            <div class="file is-primary mt-2">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" accept=".csv,.xlsx,.xls" id="fileInput">
+                                    <span class="file-cta">
+                                        <span class="file-label">Choisir un fichier</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestion des modèles -->
+                    <div class="box">
+                        <h2 class="title is-4">Modèles d'étiquettes</h2>
+                        <button class="button is-primary is-fullwidth mb-3" id="newTemplateBtn">
+                            <span class="icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Nouveau modèle</span>
+                        </button>
+                        <div id="templatesList" class="menu">
+                            <!-- Liste des modèles (remplie par JS) -->
+                        </div>
+                    </div>
+
+                    <!-- Configuration des imprimantes -->
+                    <div class="box">
+                        <h2 class="title is-4">Imprimantes</h2>
+                        <button class="button is-primary is-fullwidth mb-3" id="newPrinterBtn">
+                            <span class="icon">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Nouvelle imprimante</span>
+                        </button>
+                        <div id="printersList">
+                            <!-- Liste des imprimantes (remplie par JS) -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tableau des données -->
+                <div class="column is-8">
+                    <div class="box">
+                        <div class="level">
+                            <div class="level-left">
+                                <h2 class="title is-4">Données importées</h2>
+                            </div>
+                            <div class="level-right">
+                                <button class="button is-success" id="printSelectedBtn" disabled>
+                                    <span class="icon">
+                                        <i class="fas fa-print"></i>
+                                    </span>
+                                    <span>Imprimer la sélection</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="table is-fullwidth is-striped is-hoverable">
+                                <thead>
+                                    <tr id="tableHeaders">
+                                        <th><input type="checkbox" id="selectAll"></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableData">
+                                    <!-- Données du tableau (remplies par JS) -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <!-- Modal Nouveau modèle -->
+    <div class="modal" id="templateModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Nouveau modèle d'étiquette</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">Nom du modèle</label>
+                    <div class="control">
+                        <input class="input" type="text" id="templateName" placeholder="Nom du modèle">
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Largeur (pouces)</label>
+                            <div class="control">
+                                <input class="input" type="number" id="templateWidth" step="0.1" value="4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Hauteur (pouces)</label>
+                            <div class="control">
+                                <input class="input" type="number" id="templateHeight" step="0.1" value="6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">DPI</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select id="templateDPI">
+                                        <option value="8">203 DPI (8 DPMM)</option>
+                                        <option value="12">300 DPI (12 DPMM)</option>
+                                        <option value="24">600 DPI (24 DPMM)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Code ZPL</label>
+                    <div class="control">
+                        <textarea class="textarea" id="templateZPL" placeholder="^XA...^XZ"></textarea>
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="saveTemplateBtn">Enregistrer</button>
+                <button class="button">Annuler</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Nouvelle imprimante -->
+    <div class="modal" id="printerModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Nouvelle imprimante</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">Nom de l'imprimante</label>
+                    <div class="control">
+                        <input class="input" type="text" id="printerName" placeholder="Nom de l'imprimante">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Adresse IP</label>
+                    <div class="control">
+                        <input class="input" type="text" id="printerIP" placeholder="192.168.1.100">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Port</label>
+                    <div class="control">
+                        <input class="input" type="number" id="printerPort" value="9100">
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="savePrinterBtn">Enregistrer</button>
+                <button class="button">Annuler</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Prévisualisation -->
+    <div class="modal" id="previewModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Prévisualisation de l'étiquette</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">Code ZPL</label>
+                    <div class="control">
+                        <textarea class="textarea is-family-monospace" id="previewZPL" readonly rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="has-text-centered mt-4">
+                    <img id="previewImage" src="" alt="Prévisualisation de l'étiquette" class="mb-4">
+                    <div id="previewError" class="notification is-danger is-hidden"></div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button">Fermer</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
