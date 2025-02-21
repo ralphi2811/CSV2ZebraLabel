@@ -20,9 +20,16 @@ Application web permettant de générer et d'imprimer des étiquettes Zebra (ZPL
 
 ## Installation
 
+### Option A - Utilisation avec Docker
+
+Voir [README-DOCKER.md](README-DOCKER.md) pour les instructions détaillées d'installation avec Docker.
+L'image Docker est disponible sur Docker Hub : `ralphi2811/csv2zebralabel:latest`
+
+### Option B - Installation locale
+
 1. Cloner le dépôt :
 ```bash
-git clone https://github.com/votre-username/CSV2ZebraLabel.git
+git clone https://github.com/ralphi2811/CSV2ZebraLabel.git
 cd CSV2ZebraLabel
 ```
 
