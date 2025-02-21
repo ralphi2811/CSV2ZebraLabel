@@ -125,17 +125,37 @@
                 <div class="columns">
                     <div class="column">
                         <div class="field">
-                            <label class="label">Largeur (pouces)</label>
-                            <div class="control">
-                                <input class="input" type="number" id="templateWidth" step="0.1" value="4">
+                            <label class="label">Largeur</label>
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input class="input" type="number" id="templateWidth" step="0.1" value="4">
+                                </div>
+                                <div class="control">
+                                    <div class="select">
+                                        <select id="templateWidthUnit">
+                                            <option value="in">pouces</option>
+                                            <option value="mm">mm</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="column">
                         <div class="field">
-                            <label class="label">Hauteur (pouces)</label>
-                            <div class="control">
-                                <input class="input" type="number" id="templateHeight" step="0.1" value="6">
+                            <label class="label">Hauteur</label>
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input class="input" type="number" id="templateHeight" step="0.1" value="6">
+                                </div>
+                                <div class="control">
+                                    <div class="select">
+                                        <select id="templateHeightUnit">
+                                            <option value="in">pouces</option>
+                                            <option value="mm">mm</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,5 +250,21 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>CSV2ZebraLabel</strong> v1.0.0 par <a href="https://github.com/raphael-auberlet">Raphaël Auberlet</a>
+                <br>
+                <a href="https://github.com/raphael-auberlet/CSV2ZebraLabel">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    Code source sur GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>

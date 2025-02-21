@@ -86,13 +86,37 @@ def preview_label():
             "error": str(e)
         })
 
-@main_bp.route('/api/templates/<int:template_id>', methods=['DELETE'])
-def delete_template(template_id):
-    """Suppression d'un modèle"""
+@main_bp.route('/api/templates/<int:template_id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_template(template_id):
+    """Gestion d'un modèle spécifique"""
     template = Template.query.get_or_404(template_id)
-    db.session.delete(template)
-    db.session.commit()
-    return jsonify({"success": True, "message": "Modèle supprimé avec succès"})
+    
+    if request.method == 'GET':
+        return jsonify({
+            "id": template.id,
+            "name": template.name,
+            "variables_count": template.variables_count,
+            "width": template.width,
+            "height": template.height,
+            "dpmm": template.dpmm,
+            "zpl_code": template.zpl_code
+        })
+    
+    elif request.method == 'PUT':
+        data = request.json
+        template.name = data['name']
+        template.zpl_code = data['zpl_code']
+        template.variables_count = data['variables_count']
+        template.width = data['width']
+        template.height = data['height']
+        template.dpmm = data['dpmm']
+        db.session.commit()
+        return jsonify({"success": True, "message": "Modèle mis à jour avec succès"})
+    
+    elif request.method == 'DELETE':
+        db.session.delete(template)
+        db.session.commit()
+        return jsonify({"success": True, "message": "Modèle supprimé avec succès"})
 
 @main_bp.route('/api/printers', methods=['GET', 'POST', 'DELETE'])
 def handle_printers():
@@ -117,13 +141,32 @@ def handle_printers():
         "status": p.status
     } for p in printers])
 
-@main_bp.route('/api/printers/<int:printer_id>', methods=['DELETE'])
-def delete_printer(printer_id):
-    """Suppression d'une imprimante"""
+@main_bp.route('/api/printers/<int:printer_id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_printer(printer_id):
+    """Gestion d'une imprimante spécifique"""
     printer = Printer.query.get_or_404(printer_id)
-    db.session.delete(printer)
-    db.session.commit()
-    return jsonify({"success": True, "message": "Imprimante supprimée avec succès"})
+    
+    if request.method == 'GET':
+        return jsonify({
+            "id": printer.id,
+            "name": printer.name,
+            "ip_address": printer.ip_address,
+            "port": printer.port,
+            "status": printer.status
+        })
+    
+    elif request.method == 'PUT':
+        data = request.json
+        printer.name = data['name']
+        printer.ip_address = data['ip_address']
+        printer.port = data.get('port', 9100)
+        db.session.commit()
+        return jsonify({"success": True, "message": "Imprimante mise à jour avec succès"})
+    
+    elif request.method == 'DELETE':
+        db.session.delete(printer)
+        db.session.commit()
+        return jsonify({"success": True, "message": "Imprimante supprimée avec succès"})
 
 @main_bp.route('/api/upload', methods=['POST'])
 def upload_file():

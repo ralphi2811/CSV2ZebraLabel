@@ -53,11 +53,18 @@
 #templatesList .menu-list a .template-actions {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
 #templatesList .menu-list a .icon {
     margin-left: 0.5rem;
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+#templatesList .menu-list a .icon:hover {
+    opacity: 1;
 }
 
 /* Liste des imprimantes */
@@ -99,12 +106,14 @@
     font-size: 0.9em;
 }
 
+.edit-printer,
 .delete-printer {
     cursor: pointer;
     opacity: 0.7;
     transition: opacity 0.3s ease;
 }
 
+.edit-printer:hover,
 .delete-printer:hover {
     opacity: 1;
 }
@@ -206,6 +215,27 @@
 .table td:last-child {
     width: 100px;
     text-align: right;
+}
+
+/* Footer */
+.footer {
+    padding: 2rem 1.5rem;
+    background-color: #fafafa;
+    border-top: 1px solid #dbdbdb;
+}
+
+.footer a {
+    color: #363636;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #00d1b2;
+}
+
+.footer .icon {
+    margin-right: 0.25rem;
 }
 
 /* Responsive */
