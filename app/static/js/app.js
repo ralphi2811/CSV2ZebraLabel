@@ -46,11 +46,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Boutons d'ouverture des modales
     document.getElementById('newTemplateBtn').addEventListener('click', () => {
-        document.querySelector('#templateModal .modal-card-title').textContent = 'Nouveau modèle d\'étiquette';
+        editingTemplateId = null;
+        document.getElementById('templateName').value = '';
+        document.getElementById('templateZPL').value = '';
+        document.getElementById('templateWidth').value = '4';
+        document.getElementById('templateHeight').value = '6';
+        document.getElementById('templateWidthUnit').value = 'in';
+        document.getElementById('templateHeightUnit').value = 'in';
+        document.getElementById('templateDPI').value = '8';
+        document.querySelector('#templateModal .modal-card-title').textContent = document.querySelector('#newTemplateBtn span:not(.icon)').textContent;
         openModal('templateModal');
     });
     document.getElementById('newPrinterBtn').addEventListener('click', () => {
-        document.querySelector('#printerModal .modal-card-title').textContent = 'Nouvelle imprimante';
+        editingPrinterId = null;
+        document.getElementById('printerName').value = '';
+        document.getElementById('printerIP').value = '';
+        document.getElementById('printerPort').value = '9100';
+        document.querySelector('#printerModal .modal-card-title').textContent = document.querySelector('#newPrinterBtn span:not(.icon)').textContent;
         openModal('printerModal');
     });
 
@@ -99,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (file.name.endsWith('.csv') || file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
                 processFile(file);
             } else {
-                alert('Format de fichier non supporté. Veuillez utiliser un fichier CSV ou Excel.');
+                const errorMsg = document.querySelector('#dropZone p').textContent.split('ou')[0].trim();
+                alert(errorMsg);
             }
         }
     }
@@ -150,7 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadTemplates();
                 editingTemplateId = null;
             } else {
-                alert('Erreur lors de la sauvegarde du modèle');
+                const errorMsg = document.querySelector('#saveTemplateBtn').textContent;
+                alert('Erreur lors de ' + errorMsg.toLowerCase());
             }
         } catch (error) {
             console.error('Erreur:', error);
@@ -184,7 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadPrinters();
                 editingPrinterId = null;
             } else {
-                alert('Erreur lors de la sauvegarde de l\'imprimante');
+                const errorMsg = document.querySelector('#savePrinterBtn').textContent;
+                alert('Erreur lors de ' + errorMsg.toLowerCase());
             }
         } catch (error) {
             console.error('Erreur:', error);
@@ -194,19 +209,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Réinitialisation des modales à la fermeture
     document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('hidden.bs.modal', () => {
-            editingTemplateId = null;
-            editingPrinterId = null;
-            document.getElementById('templateName').value = '';
-            document.getElementById('templateZPL').value = '';
-            document.getElementById('templateWidth').value = '4';
-            document.getElementById('templateHeight').value = '6';
-            document.getElementById('templateWidthUnit').value = 'in';
-            document.getElementById('templateHeightUnit').value = 'in';
-            document.getElementById('printerName').value = '';
-            document.getElementById('printerIP').value = '';
-            document.getElementById('printerPort').value = '9100';
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class' && !modal.classList.contains('is-active')) {
+                    if (modal.id === 'templateModal') {
+                        editingTemplateId = null;
+                        document.getElementById('templateName').value = '';
+                        document.getElementById('templateZPL').value = '';
+                        document.getElementById('templateWidth').value = '4';
+                        document.getElementById('templateHeight').value = '6';
+                        document.getElementById('templateWidthUnit').value = 'in';
+                        document.getElementById('templateHeightUnit').value = 'in';
+                        document.getElementById('templateDPI').value = '8';
+                    } else if (modal.id === 'printerModal') {
+                        editingPrinterId = null;
+                        document.getElementById('printerName').value = '';
+                        document.getElementById('printerIP').value = '';
+                        document.getElementById('printerPort').value = '9100';
+                    }
+                }
+            });
         });
+        observer.observe(modal, { attributes: true });
     });
 
     // Chargement initial des données
@@ -281,7 +305,7 @@ async function loadTemplates() {
                     document.getElementById('templateHeight').value = template.height.toFixed(1);
                     document.getElementById('templateDPI').value = template.dpmm;
                     
-                    document.querySelector('#templateModal .modal-card-title').textContent = 'Modifier le modèle';
+                    document.querySelector('#templateModal .modal-card-title').textContent = gettext('Modifier') + ' ' + document.querySelector('#newTemplateBtn span:not(.icon)').textContent.toLowerCase();
                     openModal('templateModal');
                 } catch (error) {
                     console.error('Erreur:', error);
@@ -295,7 +319,8 @@ async function loadTemplates() {
             btn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                if (confirm('Voulez-vous vraiment supprimer ce modèle ?')) {
+                const modelName = document.querySelector('#newTemplateBtn span:not(.icon)').textContent.toLowerCase();
+                if (confirm('Voulez-vous vraiment supprimer ce ' + modelName + ' ?')) {
                     const templateId = btn.dataset.templateId;
                     try {
                         const response = await fetch(`/api/templates/${templateId}`, {
@@ -384,7 +409,7 @@ async function loadPrinters() {
                     document.getElementById('printerIP').value = printer.ip_address;
                     document.getElementById('printerPort').value = printer.port;
                     
-                    document.querySelector('#printerModal .modal-card-title').textContent = 'Modifier l\'imprimante';
+                    document.querySelector('#printerModal .modal-card-title').textContent = gettext('Modifier') + ' ' + document.querySelector('#newPrinterBtn span:not(.icon)').textContent.toLowerCase();
                     openModal('printerModal');
                 } catch (error) {
                     console.error('Erreur:', error);
@@ -397,7 +422,8 @@ async function loadPrinters() {
         document.querySelectorAll('.delete-printer').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 e.stopPropagation();
-                if (confirm('Voulez-vous vraiment supprimer cette imprimante ?')) {
+                const printerName = document.querySelector('#newPrinterBtn span:not(.icon)').textContent.toLowerCase();
+                if (confirm('Voulez-vous vraiment supprimer cette ' + printerName + ' ?')) {
                     const printerId = btn.dataset.printerId;
                     try {
                         const response = await fetch(`/api/printers/${printerId}`, {
@@ -500,7 +526,8 @@ function updateTable(data) {
 async function previewTemplateZPL() {
     const zpl = document.getElementById('templateZPL').value;
     if (!zpl) {
-        alert('Veuillez saisir un code ZPL');
+        const zplLabel = document.querySelector('label[for="templateZPL"]').textContent;
+        alert('Veuillez saisir un ' + zplLabel);
         return;
     }
 
@@ -557,7 +584,8 @@ async function previewTemplateZPL() {
 
 async function previewLabel(rowIndex) {
     if (!window.selectedTemplateId) {
-        alert('Veuillez sélectionner un modèle d\'étiquette');
+        const modelName = document.querySelector('#newTemplateBtn span:not(.icon)').textContent.toLowerCase();
+        alert('Veuillez sélectionner un ' + modelName);
         return;
     }
 
@@ -682,7 +710,8 @@ async function printSelected() {
         return;
     }
     if (!window.selectedPrinterId) {
-        alert('Veuillez sélectionner une imprimante');
+        const printerName = document.querySelector('#newPrinterBtn span:not(.icon)').textContent.toLowerCase();
+        alert('Veuillez sélectionner une ' + printerName);
         return;
     }
 
@@ -776,7 +805,8 @@ async function printLabel(rowIndex) {
 
         const result = await response.json();
         if (result.success) {
-            alert('Impression envoyée avec succès');
+            const printBtn = document.querySelector('#printSelectedBtn span:not(.icon)').textContent.split('(')[0].trim();
+            alert(printBtn + ' envoyée avec succès');
         } else {
             alert('Erreur lors de l\'impression: ' + result.message);
         }

@@ -280,6 +280,16 @@
         </div>
     </div>
 
+    <script>
+        // Traductions
+        window.translations = {
+            'Modifier': "{{ _('Modifier') }}"
+        };
+        // Fonction de traduction
+        function gettext(text) {
+            return window.translations[text] || text;
+        }
+    </script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
     <!-- Footer -->

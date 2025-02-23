@@ -10,6 +10,7 @@ Application web permettant de générer et d'imprimer des étiquettes Zebra (ZPL
 - Gestion des imprimantes Zebra
 - Impression unique ou multiple
 - Interface moderne et réactive avec Bulma CSS
+- Support multilingue (Français, Anglais)
 
 ## Prérequis
 
@@ -20,10 +21,15 @@ Application web permettant de générer et d'imprimer des étiquettes Zebra (ZPL
 
 ## Installation
 
-### Option A - Utilisation avec Docker
+### Option A - Utilisation avec Docker (Recommandé)
 
 Voir [README-DOCKER.md](README-DOCKER.md) pour les instructions détaillées d'installation avec Docker.
 L'image Docker est disponible sur Docker Hub : `ralphi2811/csv2zebralabel:latest`
+
+Un fichier `docker-compose.yml` est fourni pour faciliter le déploiement :
+```bash
+docker-compose up -d
+```
 
 ### Option B - Installation locale
 
@@ -44,12 +50,6 @@ source venv/bin/activate  # Linux/macOS
 3. Installer les dépendances :
 ```bash
 pip install -r requirements.txt
-```
-
-4. Créer le fichier .env :
-```bash
-cp .env.example .env
-# Modifier les variables d'environnement selon vos besoins
 ```
 
 ## Utilisation
@@ -128,14 +128,22 @@ CSV2ZebraLabel/
 ├── app/
 │   ├── models/         # Modèles SQLAlchemy
 │   ├── static/         # Assets statiques (CSS, JS)
+│   │   ├── css/       # Fichiers CSS
+│   │   ├── js/        # Fichiers JavaScript
+│   │   └── img/       # Images
 │   ├── templates/      # Templates HTML
-│   ├── utils.py        # Utilitaires
-│   ├── routes.py       # Routes Flask
-│   └── __init__.py     # Configuration Flask
-├── zebra_emulator/     # Émulateur d'imprimante
-├── instance/           # Base de données SQLite
-├── requirements.txt    # Dépendances Python
-└── run.py             # Point d'entrée
+│   ├── translations/   # Fichiers de traduction
+│   │   ├── en/        # Traductions anglaises
+│   │   └── fr/        # Traductions françaises
+│   ├── utils.py       # Utilitaires
+│   ├── routes.py      # Routes Flask
+│   └── __init__.py    # Configuration Flask
+├── zebra_emulator/    # Émulateur d'imprimante
+├── instance/         # Base de données SQLite
+├── docker-compose.yml # Configuration Docker Compose
+├── Dockerfile        # Configuration Docker
+├── requirements.txt  # Dépendances Python
+└── run.py           # Point d'entrée
 ```
 
 ## Développement
@@ -155,6 +163,22 @@ L'application expose plusieurs endpoints REST :
 - `/api/preview` : Prévisualisation des étiquettes
 - `/api/print` : Impression d'étiquettes
 - `/api/upload` : Import de fichiers
+
+### Traductions
+
+L'application utilise Flask-Babel pour la gestion des traductions. Les fichiers de traduction se trouvent dans le dossier `app/translations/`.
+
+Pour mettre à jour les traductions :
+```bash
+# Extraire les chaînes à traduire
+pybabel extract -F babel.cfg -o app/translations/messages.pot .
+
+# Mettre à jour les fichiers de traduction
+pybabel update -i app/translations/messages.pot -d app/translations
+
+# Compiler les traductions
+pybabel compile -d app/translations
+```
 
 ## Licence
 

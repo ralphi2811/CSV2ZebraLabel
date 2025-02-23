@@ -138,3 +138,51 @@ msgstr "For more information about the ZPL language, check the"
 
 msgid "documentation officielle Zebra"
 msgstr "official Zebra documentation"
+
+msgid "Nouveau modèle d'étiquette"
+msgstr "New Label Template"
+
+msgid "Nom du modèle"
+msgstr "Template Name"
+
+msgid "Largeur"
+msgstr "Width"
+
+msgid "pouces"
+msgstr "inches"
+
+msgid "Hauteur"
+msgstr "Height"
+
+msgid "Code ZPL"
+msgstr "ZPL Code"
+
+msgid "Prévisualiser"
+msgstr "Preview"
+
+msgid "Enregistrer"
+msgstr "Save"
+
+msgid "Annuler"
+msgstr "Cancel"
+
+msgid "Nouvelle imprimante"
+msgstr "New Printer"
+
+msgid "Nom de l'imprimante"
+msgstr "Printer Name"
+
+msgid "Adresse IP"
+msgstr "IP Address"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Prévisualisation de l'étiquette"
+msgstr "Label Preview"
+
+msgid "Fermer"
+msgstr "Close"
+
+msgid "Modifier"
+msgstr "Edit"
