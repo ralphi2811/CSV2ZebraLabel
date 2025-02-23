@@ -11,6 +11,25 @@
     transition: all 0.3s ease;
 }
 
+.file-upload-zone .file {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.file-upload-zone .file-label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.file-upload-zone .file-cta {
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+}
+
 .file-upload-zone:hover,
 .file-upload-zone.is-dragover {
     border-color: #00d1b2;
