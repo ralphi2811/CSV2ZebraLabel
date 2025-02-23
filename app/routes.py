@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, current_app
+from flask import Blueprint, render_template, request, jsonify, current_app, session, redirect, url_for
 from app.models import Template, Printer, PrintHistory
 from app.utils import read_file_data, send_to_printer, replace_variables
 from app import db
@@ -18,6 +18,12 @@ def index():
 def zpl_doc():
     """Documentation du langage ZPL"""
     return render_template('zpl_doc.html')
+
+@main_bp.route('/change-lang/<lang>')
+def change_lang(lang):
+    """Change la langue de l'interface"""
+    session['language'] = lang
+    return redirect(request.referrer or url_for('main.index'))
 
 @main_bp.route('/api/templates', methods=['GET', 'POST', 'DELETE'])
 def handle_templates():

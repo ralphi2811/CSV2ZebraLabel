@@ -1,0 +1,140 @@
+# French translations for CSV2ZebraLabel.
+# Copyright (C) 2024 Raphaël Auberlet
+# This file is distributed under the same license as the CSV2ZebraLabel project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-23 14:13+0400\n"
+"PO-Revision-Date: 2024-02-23 14:13+0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "CSV2ZebraLabel"
+msgstr "CSV2ZebraLabel"
+
+msgid "Documentation ZPL"
+msgstr "Documentation ZPL"
+
+msgid "Import de données"
+msgstr "Import de données"
+
+msgid "Première ligne comme en-tête"
+msgstr "Première ligne comme en-tête"
+
+msgid "Glissez votre fichier CSV/Excel ici"
+msgstr "Glissez votre fichier CSV/Excel ici"
+
+msgid "Choisir un fichier"
+msgstr "Choisir un fichier"
+
+msgid "Modèles d'étiquettes"
+msgstr "Modèles d'étiquettes"
+
+msgid "Nouveau modèle"
+msgstr "Nouveau modèle"
+
+msgid "Imprimantes"
+msgstr "Imprimantes"
+
+msgid "Nouvelle imprimante"
+msgstr "Nouvelle imprimante"
+
+msgid "Données importées"
+msgstr "Données importées"
+
+msgid "Imprimer la sélection"
+msgstr "Imprimer la sélection"
+
+msgid "Documentation ZPL - CSV2ZebraLabel"
+msgstr "Documentation ZPL - CSV2ZebraLabel"
+
+msgid "Guide de base du langage ZPL (Zebra Programming Language)"
+msgstr "Guide de base du langage ZPL (Zebra Programming Language)"
+
+msgid "Introduction"
+msgstr "Introduction"
+
+msgid "Le ZPL (Zebra Programming Language) est un langage de programmation créé par Zebra Technologies pour contrôler leurs imprimantes d'étiquettes. Chaque commande ZPL commence par le caractère ^ (circonflexe)."
+msgstr "Le ZPL (Zebra Programming Language) est un langage de programmation créé par Zebra Technologies pour contrôler leurs imprimantes d'étiquettes. Chaque commande ZPL commence par le caractère ^ (circonflexe)."
+
+msgid "Structure de base"
+msgstr "Structure de base"
+
+msgid "Commandes essentielles"
+msgstr "Commandes essentielles"
+
+msgid "Position et orientation"
+msgstr "Position et orientation"
+
+msgid "Commande"
+msgstr "Commande"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Exemple"
+msgstr "Exemple"
+
+msgid "Position de départ (Field Origin)"
+msgstr "Position de départ (Field Origin)"
+
+msgid "Orientation de l'étiquette"
+msgstr "Orientation de l'étiquette"
+
+msgid "Texte et polices"
+msgstr "Texte et polices"
+
+msgid "Données du champ (Field Data)"
+msgstr "Données du champ (Field Data)"
+
+msgid "Police et taille"
+msgstr "Police et taille"
+
+msgid "Bloc de texte avec retour à la ligne"
+msgstr "Bloc de texte avec retour à la ligne"
+
+msgid "Codes-barres"
+msgstr "Codes-barres"
+
+msgid "Paramètres du code-barres"
+msgstr "Paramètres du code-barres"
+
+msgid "Exemple complet"
+msgstr "Exemple complet"
+
+msgid "Cet exemple crée une étiquette avec :"
+msgstr "Cet exemple crée une étiquette avec :"
+
+msgid "Un champ \"Nom\" à la position (50,50)"
+msgstr "Un champ \"Nom\" à la position (50,50)"
+
+msgid "Un champ \"Prénom\" à la position (50,100)"
+msgstr "Un champ \"Prénom\" à la position (50,100)"
+
+msgid "Un code-barres Code 128 à la position (50,150)"
+msgstr "Un code-barres Code 128 à la position (50,150)"
+
+msgid "Variables"
+msgstr "Variables"
+
+msgid "Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) qui seront remplacées par les valeurs des colonnes de votre fichier CSV/Excel :"
+msgstr "Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) qui seront remplacées par les valeurs des colonnes de votre fichier CSV/Excel :"
+
+msgid "première colonne"
+msgstr "première colonne"
+
+msgid "deuxième colonne"
+msgstr "deuxième colonne"
+
+msgid "Pour plus d'informations sur le langage ZPL, consultez la"
+msgstr "Pour plus d'informations sur le langage ZPL, consultez la"
+
+msgid "documentation officielle Zebra"
+msgstr "documentation officielle Zebra"

@@ -19,11 +19,17 @@
 
         <div class="navbar-menu">
             <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light" href="{{ url_for('main.change_lang', lang='fr') }}">FR</a>
+                        <a class="button is-light" href="{{ url_for('main.change_lang', lang='en') }}">EN</a>
+                    </div>
+                </div>
                 <a class="navbar-item" href="/zpl-doc">
                     <span class="icon">
                         <i class="fas fa-book"></i>
                     </span>
-                    <span>Documentation ZPL</span>
+                    <span>{{ _('Documentation ZPL') }}</span>
                 </a>
             </div>
         </div>
@@ -32,91 +38,91 @@
     <!-- Contenu principal -->
     <section class="section">
         <div class="container">
-            <h1 class="title">Documentation ZPL</h1>
-            <p class="subtitle">Guide de base du langage ZPL (Zebra Programming Language)</p>
+            <h1 class="title">{{ _('Documentation ZPL') }}</h1>
+            <p class="subtitle">{{ _('Guide de base du langage ZPL (Zebra Programming Language)') }}</p>
 
             <div class="content">
-                <h2>Introduction</h2>
-                <p>Le ZPL (Zebra Programming Language) est un langage de programmation créé par Zebra Technologies pour contrôler leurs imprimantes d'étiquettes. Chaque commande ZPL commence par le caractère ^ (circonflexe).</p>
+                <h2>{{ _('Introduction') }}</h2>
+                <p>{{ _('Le ZPL (Zebra Programming Language) est un langage de programmation créé par Zebra Technologies pour contrôler leurs imprimantes d\'étiquettes. Chaque commande ZPL commence par le caractère ^ (circonflexe).') }}</p>
 
-                <h2>Structure de base</h2>
+                <h2>{{ _('Structure de base') }}</h2>
                 <div class="box">
-                    <pre><code>^XA  // Début de l'étiquette
-^...  // Commandes ZPL
-^XZ  // Fin de l'étiquette</code></pre>
+                    <pre><code>^XA  // {{ _('Début de l\'étiquette') }}
+^...  // {{ _('Commandes ZPL') }}
+^XZ  // {{ _('Fin de l\'étiquette') }}</code></pre>
                 </div>
 
-                <h2>Commandes essentielles</h2>
+                <h2>{{ _('Commandes essentielles') }}</h2>
                 
-                <h3>Position et orientation</h3>
+                <h3>{{ _('Position et orientation') }}</h3>
                 <div class="table-container">
                     <table class="table is-striped">
                         <thead>
                             <tr>
-                                <th>Commande</th>
-                                <th>Description</th>
-                                <th>Exemple</th>
+                                <th>{{ _('Commande') }}</th>
+                                <th>{{ _('Description') }}</th>
+                                <th>{{ _('Exemple') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>^FO</code></td>
-                                <td>Position de départ (Field Origin)</td>
+                                <td>{{ _('Position de départ (Field Origin)') }}</td>
                                 <td><code>^FO50,50</code> (x=50, y=50)</td>
                             </tr>
                             <tr>
                                 <td><code>^FW</code></td>
-                                <td>Orientation de l'étiquette</td>
+                                <td>{{ _('Orientation de l\'étiquette') }}</td>
                                 <td><code>^FWN</code> (Normal), <code>^FWR</code> (Rotation 90°)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Texte et polices</h3>
+                <h3>{{ _('Texte et polices') }}</h3>
                 <div class="table-container">
                     <table class="table is-striped">
                         <thead>
                             <tr>
-                                <th>Commande</th>
-                                <th>Description</th>
-                                <th>Exemple</th>
+                                <th>{{ _('Commande') }}</th>
+                                <th>{{ _('Description') }}</th>
+                                <th>{{ _('Exemple') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>^FD</code></td>
-                                <td>Données du champ (Field Data)</td>
+                                <td>{{ _('Données du champ (Field Data)') }}</td>
                                 <td><code>^FDHello World</code></td>
                             </tr>
                             <tr>
                                 <td><code>^CF</code></td>
-                                <td>Police et taille</td>
+                                <td>{{ _('Police et taille') }}</td>
                                 <td><code>^CF0,30</code> (Police 0, hauteur 30)</td>
                             </tr>
                             <tr>
                                 <td><code>^FB</code></td>
-                                <td>Bloc de texte avec retour à la ligne</td>
+                                <td>{{ _('Bloc de texte avec retour à la ligne') }}</td>
                                 <td><code>^FB300,3</code> (Largeur 300, max 3 lignes)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Codes-barres</h3>
+                <h3>{{ _('Codes-barres') }}</h3>
                 <div class="table-container">
                     <table class="table is-striped">
                         <thead>
                             <tr>
-                                <th>Commande</th>
-                                <th>Description</th>
-                                <th>Exemple</th>
+                                <th>{{ _('Commande') }}</th>
+                                <th>{{ _('Description') }}</th>
+                                <th>{{ _('Exemple') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>^BY</code></td>
-                                <td>Paramètres du code-barres</td>
+                                <td>{{ _('Paramètres du code-barres') }}</td>
                                 <td><code>^BY3</code> (Largeur module = 3)</td>
                             </tr>
                             <tr>
@@ -133,7 +139,7 @@
                     </table>
                 </div>
 
-                <h2>Exemple complet</h2>
+                <h2>{{ _('Exemple complet') }}</h2>
                 <div class="box">
                     <pre><code>^XA
 ^FO50,50^CF0,30^FDNom: $1^FS
@@ -141,24 +147,24 @@
 ^FO50,150^BY3
 ^BCN,100,Y,N^FD$3^FS
 ^XZ</code></pre>
-                    <p class="help">Cet exemple crée une étiquette avec :</p>
+                    <p class="help">{{ _('Cet exemple crée une étiquette avec :') }}</p>
                     <ul>
-                        <li>Un champ "Nom" à la position (50,50)</li>
-                        <li>Un champ "Prénom" à la position (50,100)</li>
-                        <li>Un code-barres Code 128 à la position (50,150)</li>
+                        <li>{{ _('Un champ "Nom" à la position (50,50)') }}</li>
+                        <li>{{ _('Un champ "Prénom" à la position (50,100)') }}</li>
+                        <li>{{ _('Un code-barres Code 128 à la position (50,150)') }}</li>
                     </ul>
                 </div>
 
-                <h2>Variables</h2>
-                <p>Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) qui seront remplacées par les valeurs des colonnes de votre fichier CSV/Excel :</p>
+                <h2>{{ _('Variables') }}</h2>
+                <p>{{ _('Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) qui seront remplacées par les valeurs des colonnes de votre fichier CSV/Excel :') }}</p>
                 <ul>
-                    <li>$1 = première colonne</li>
-                    <li>$2 = deuxième colonne</li>
+                    <li>${{ _('première colonne') }}</li>
+                    <li>${{ _('deuxième colonne') }}</li>
                     <li>etc.</li>
                 </ul>
 
                 <div class="notification is-info">
-                    <p>Pour plus d'informations sur le langage ZPL, consultez la <a href="https://www.zebra.com/content/dam/zebra/manuals/printers/common/programming/zpl-zbi2-pm-en.pdf" target="_blank">documentation officielle Zebra</a>.</p>
+                    <p>{{ _('Pour plus d\'informations sur le langage ZPL, consultez la') }} <a href="https://www.zebra.com/content/dam/zebra/manuals/printers/common/programming/zpl-zbi2-pm-en.pdf" target="_blank">{{ _('documentation officielle Zebra') }}</a>.</p>
                 </div>
             </div>
         </div>

@@ -19,11 +19,17 @@
 
         <div class="navbar-menu">
             <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light" href="{{ url_for('main.change_lang', lang='fr') }}">FR</a>
+                        <a class="button is-light" href="{{ url_for('main.change_lang', lang='en') }}">EN</a>
+                    </div>
+                </div>
                 <a class="navbar-item" href="/zpl-doc">
                     <span class="icon">
                         <i class="fas fa-book"></i>
                     </span>
-                    <span>Documentation ZPL</span>
+                    <span>{{ _('Documentation ZPL') }}</span>
                 </a>
             </div>
         </div>
@@ -36,23 +42,23 @@
                 <!-- Zone d'import de fichiers -->
                 <div class="column is-4">
                     <div class="box">
-                        <h2 class="title is-4">Import de données</h2>
+                        <h2 class="title is-4">{{ _('Import de données') }}</h2>
                         <div class="field mb-4">
                             <label class="checkbox">
                                 <input type="checkbox" id="includeHeader" checked>
-                                Première ligne comme en-tête
+                                {{ _('Première ligne comme en-tête') }}
                             </label>
                         </div>
                         <div class="file-upload-zone has-text-centered p-6 mb-4" id="dropZone">
                             <span class="icon is-large">
                                 <i class="fas fa-file-upload fa-2x"></i>
                             </span>
-                            <p class="mt-2">Glissez votre fichier CSV/Excel ici<br>ou</p>
+                            <p class="mt-2">{{ _('Glissez votre fichier CSV/Excel ici') }}<br>ou</p>
                             <div class="file is-primary mt-2">
                                 <label class="file-label">
                                     <input class="file-input" type="file" accept=".csv,.xlsx,.xls" id="fileInput">
                                     <span class="file-cta">
-                                        <span class="file-label">Choisir un fichier</span>
+                                        <span class="file-label">{{ _('Choisir un fichier') }}</span>
                                     </span>
                                 </label>
                             </div>
@@ -61,12 +67,12 @@
 
                     <!-- Gestion des modèles -->
                     <div class="box">
-                        <h2 class="title is-4">Modèles d'étiquettes</h2>
+                        <h2 class="title is-4">{{ _('Modèles d\'étiquettes') }}</h2>
                         <button class="button is-primary is-fullwidth mb-3" id="newTemplateBtn">
                             <span class="icon">
                                 <i class="fas fa-plus"></i>
                             </span>
-                            <span>Nouveau modèle</span>
+                            <span>{{ _('Nouveau modèle') }}</span>
                         </button>
                         <div id="templatesList" class="menu">
                             <!-- Liste des modèles (remplie par JS) -->
@@ -75,12 +81,12 @@
 
                     <!-- Configuration des imprimantes -->
                     <div class="box">
-                        <h2 class="title is-4">Imprimantes</h2>
+                        <h2 class="title is-4">{{ _('Imprimantes') }}</h2>
                         <button class="button is-primary is-fullwidth mb-3" id="newPrinterBtn">
                             <span class="icon">
                                 <i class="fas fa-plus"></i>
                             </span>
-                            <span>Nouvelle imprimante</span>
+                            <span>{{ _('Nouvelle imprimante') }}</span>
                         </button>
                         <div id="printersList">
                             <!-- Liste des imprimantes (remplie par JS) -->
@@ -93,14 +99,14 @@
                     <div class="box">
                         <div class="level">
                             <div class="level-left">
-                                <h2 class="title is-4">Données importées</h2>
+                                <h2 class="title is-4">{{ _('Données importées') }}</h2>
                             </div>
                             <div class="level-right">
                                 <button class="button is-success" id="printSelectedBtn" disabled>
                                     <span class="icon">
                                         <i class="fas fa-print"></i>
                                     </span>
-                                    <span>Imprimer la sélection</span>
+                                    <span>{{ _('Imprimer la sélection') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -129,20 +135,20 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Nouveau modèle d'étiquette</p>
+                <p class="modal-card-title">{{ _('Nouveau modèle d\'étiquette') }}</p>
                 <button class="delete" aria-label="close"></button>
             </header>
             <section class="modal-card-body">
                 <div class="field">
-                    <label class="label">Nom du modèle</label>
+                    <label class="label">{{ _('Nom du modèle') }}</label>
                     <div class="control">
-                        <input class="input" type="text" id="templateName" placeholder="Nom du modèle">
+                        <input class="input" type="text" id="templateName" placeholder="{{ _('Nom du modèle') }}">
                     </div>
                 </div>
                 <div class="columns">
                     <div class="column">
                         <div class="field">
-                            <label class="label">Largeur</label>
+                            <label class="label">{{ _('Largeur') }}</label>
                             <div class="field has-addons">
                                 <div class="control is-expanded">
                                     <input class="input" type="number" id="templateWidth" step="0.1" value="4">
@@ -150,7 +156,7 @@
                                 <div class="control">
                                     <div class="select">
                                         <select id="templateWidthUnit">
-                                            <option value="in">pouces</option>
+                                            <option value="in">{{ _('pouces') }}</option>
                                             <option value="mm">mm</option>
                                         </select>
                                     </div>
@@ -160,7 +166,7 @@
                     </div>
                     <div class="column">
                         <div class="field">
-                            <label class="label">Hauteur</label>
+                            <label class="label">{{ _('Hauteur') }}</label>
                             <div class="field has-addons">
                                 <div class="control is-expanded">
                                     <input class="input" type="number" id="templateHeight" step="0.1" value="6">
@@ -168,7 +174,7 @@
                                 <div class="control">
                                     <div class="select">
                                         <select id="templateHeightUnit">
-                                            <option value="in">pouces</option>
+                                            <option value="in">{{ _('pouces') }}</option>
                                             <option value="mm">mm</option>
                                         </select>
                                     </div>
@@ -192,7 +198,7 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Code ZPL</label>
+                    <label class="label">{{ _('Code ZPL') }}</label>
                     <div class="control">
                         <textarea class="textarea" id="templateZPL" placeholder="^XA...^XZ"></textarea>
                     </div>
@@ -201,14 +207,14 @@
                             <span class="icon">
                                 <i class="fas fa-eye"></i>
                             </span>
-                            <span>Prévisualiser</span>
+                            <span>{{ _('Prévisualiser') }}</span>
                         </button>
                     </div>
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" id="saveTemplateBtn">Enregistrer</button>
-                <button class="button">Annuler</button>
+                <button class="button is-success" id="saveTemplateBtn">{{ _('Enregistrer') }}</button>
+                <button class="button">{{ _('Annuler') }}</button>
             </footer>
         </div>
     </div>
@@ -218,32 +224,32 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Nouvelle imprimante</p>
+                <p class="modal-card-title">{{ _('Nouvelle imprimante') }}</p>
                 <button class="delete" aria-label="close"></button>
             </header>
             <section class="modal-card-body">
                 <div class="field">
-                    <label class="label">Nom de l'imprimante</label>
+                    <label class="label">{{ _('Nom de l\'imprimante') }}</label>
                     <div class="control">
-                        <input class="input" type="text" id="printerName" placeholder="Nom de l'imprimante">
+                        <input class="input" type="text" id="printerName" placeholder="{{ _('Nom de l\'imprimante') }}">
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Adresse IP</label>
+                    <label class="label">{{ _('Adresse IP') }}</label>
                     <div class="control">
                         <input class="input" type="text" id="printerIP" placeholder="192.168.1.100">
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Port</label>
+                    <label class="label">{{ _('Port') }}</label>
                     <div class="control">
                         <input class="input" type="number" id="printerPort" value="9100">
                     </div>
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" id="savePrinterBtn">Enregistrer</button>
-                <button class="button">Annuler</button>
+                <button class="button is-success" id="savePrinterBtn">{{ _('Enregistrer') }}</button>
+                <button class="button">{{ _('Annuler') }}</button>
             </footer>
         </div>
     </div>
@@ -253,23 +259,23 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Prévisualisation de l'étiquette</p>
+                <p class="modal-card-title">{{ _('Prévisualisation de l\'étiquette') }}</p>
                 <button class="delete" aria-label="close"></button>
             </header>
             <section class="modal-card-body">
                 <div class="field">
-                    <label class="label">Code ZPL</label>
+                    <label class="label">{{ _('Code ZPL') }}</label>
                     <div class="control">
                         <textarea class="textarea is-family-monospace" id="previewZPL" readonly rows="4"></textarea>
                     </div>
                 </div>
                 <div class="has-text-centered mt-4">
-                    <img id="previewImage" src="" alt="Prévisualisation de l'étiquette" class="mb-4">
+                    <img id="previewImage" src="" alt="{{ _('Prévisualisation de l\'étiquette') }}" class="mb-4">
                     <div id="previewError" class="notification is-danger is-hidden"></div>
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <button class="button">Fermer</button>
+                <button class="button">{{ _('Fermer') }}</button>
             </footer>
         </div>
     </div>
