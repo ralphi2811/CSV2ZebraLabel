@@ -1,185 +1,185 @@
 # CSV2ZebraLabel
 
-Application web permettant de générer et d'imprimer des étiquettes Zebra (ZPL) à partir de fichiers CSV ou Excel.
+Web application for generating and printing Zebra labels (ZPL) from CSV or Excel files.
 
-## Fonctionnalités
+## Features
 
-- Import de fichiers CSV et Excel
-- Gestion des modèles d'étiquettes ZPL
-- Prévisualisation des étiquettes via l'API Labelary
-- Gestion des imprimantes Zebra
-- Impression unique ou multiple
-- Interface moderne et réactive avec Bulma CSS
-- Support multilingue (Français, Anglais)
+- CSV and Excel file import
+- ZPL label template management
+- Label preview via Labelary API
+- Zebra printer management
+- Single or multiple printing
+- Modern and responsive interface with Bulma CSS
+- Multilingual support (French, English)
 
-## Prérequis
+## Prerequisites
 
-- Python 3.10 ou supérieur
-- pip (gestionnaire de paquets Python)
-- Navigateur web moderne
-- Imprimante Zebra ou émulateur
+- Python 3.10 or higher
+- pip (Python package manager)
+- Modern web browser
+- Zebra printer or emulator
 
 ## Installation
 
-### Option A - Utilisation avec Docker (Recommandé)
+### Option A - Using Docker (Recommended)
 
-Voir [README-DOCKER.md](README-DOCKER.md) pour les instructions détaillées d'installation avec Docker.
-L'image Docker est disponible sur Docker Hub : `ralphi2811/csv2zebralabel:latest`
+See [README-DOCKER.md](README-DOCKER.md) for detailed Docker installation instructions.
+Docker image is available on Docker Hub: `ralphi2811/csv2zebralabel:latest`
 
-Un fichier `docker-compose.yml` est fourni pour faciliter le déploiement :
+A `docker-compose.yml` file is provided for easy deployment:
 ```bash
 docker-compose up -d
 ```
 
-### Option B - Installation locale
+### Option B - Local Installation
 
-1. Cloner le dépôt :
+1. Clone the repository:
 ```bash
 git clone https://github.com/ralphi2811/CSV2ZebraLabel.git
 cd CSV2ZebraLabel
 ```
 
-2. Créer un environnement virtuel et l'activer :
+2. Create and activate a virtual environment:
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # Linux/macOS
-# ou
+# or
 .\venv\Scripts\activate  # Windows
 ```
 
-3. Installer les dépendances :
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Utilisation
+## Usage
 
-1. Démarrer l'application :
+1. Start the application:
 ```bash
 python run.py
 ```
 
-2. Accéder à l'interface web :
-- Ouvrir votre navigateur
-- Aller à `http://localhost:5000`
+2. Access the web interface:
+- Open your browser
+- Go to `http://localhost:5000`
 
-## Émulateur d'imprimante (pour les tests)
+## Printer Emulator (for testing)
 
-Un émulateur d'imprimante Zebra est inclus pour faciliter les tests :
+A Zebra printer emulator is included to facilitate testing:
 
-1. Installer les dépendances de l'émulateur :
+1. Install emulator dependencies:
 ```bash
 cd zebra_emulator
 pip install -r requirements.txt
 ```
 
-2. Lancer l'émulateur :
+2. Start the emulator:
 ```bash
 python zebra_server.py
 ```
 
-L'émulateur écoutera sur le port 9100 et affichera les codes ZPL reçus.
+The emulator will listen on port 9100 and display received ZPL codes.
 
-## Guide d'utilisation
+## User Guide
 
-### 1. Gestion des modèles
+### 1. Template Management
 
-- Cliquer sur "Nouveau modèle"
-- Remplir les informations :
-  - Nom du modèle
-  - Dimensions (largeur x hauteur)
-  - DPI (8, 12, ou 24)
-  - Code ZPL avec variables ($1, $2, etc.)
+- Click on "New Template"
+- Fill in the information:
+  - Template name
+  - Dimensions (width x height)
+  - DPI (8, 12, or 24)
+  - ZPL code with variables ($1, $2, etc.)
 
-### 2. Configuration des imprimantes
+### 2. Printer Configuration
 
-- Cliquer sur "Nouvelle imprimante"
-- Remplir les informations :
-  - Nom de l'imprimante
-  - Adresse IP
-  - Port (par défaut : 9100)
+- Click on "New Printer"
+- Fill in the information:
+  - Printer name
+  - IP address
+  - Port (default: 9100)
 
-### 3. Import de données
+### 3. Data Import
 
-- Glisser-déposer un fichier CSV/Excel
-- Les colonnes sont automatiquement détectées
-- Les variables du modèle ($1, $2, etc.) correspondent à l'ordre des colonnes
+- Drag and drop a CSV/Excel file
+- Columns are automatically detected
+- Template variables ($1, $2, etc.) correspond to column order
 
-### 4. Impression
+### 4. Printing
 
-- Sélectionner un modèle d'étiquette
-- Sélectionner une imprimante
-- Options d'impression :
-  - Impression unique : bouton d'impression par ligne
-  - Impression multiple : sélectionner plusieurs lignes et utiliser "Imprimer la sélection"
+- Select a label template
+- Select a printer
+- Printing options:
+  - Single print: print button per row
+  - Multiple print: select multiple rows and use "Print Selection"
 
-### 5. Prévisualisation
+### 5. Preview
 
-- Cliquer sur l'icône "œil" pour prévisualiser une étiquette
-- La prévisualisation montre :
-  - Le code ZPL généré
-  - L'aperçu visuel de l'étiquette
-  - Les éventuelles erreurs
+- Click on the "eye" icon to preview a label
+- The preview shows:
+  - Generated ZPL code
+  - Visual label preview
+  - Any errors
 
-## Structure du projet
+## Project Structure
 
 ```
 CSV2ZebraLabel/
 ├── app/
-│   ├── models/         # Modèles SQLAlchemy
-│   ├── static/         # Assets statiques (CSS, JS)
-│   │   ├── css/       # Fichiers CSS
-│   │   ├── js/        # Fichiers JavaScript
+│   ├── models/         # SQLAlchemy models
+│   ├── static/         # Static assets (CSS, JS)
+│   │   ├── css/       # CSS files
+│   │   ├── js/        # JavaScript files
 │   │   └── img/       # Images
-│   ├── templates/      # Templates HTML
-│   ├── translations/   # Fichiers de traduction
-│   │   ├── en/        # Traductions anglaises
-│   │   └── fr/        # Traductions françaises
-│   ├── utils.py       # Utilitaires
-│   ├── routes.py      # Routes Flask
-│   └── __init__.py    # Configuration Flask
-├── zebra_emulator/    # Émulateur d'imprimante
-├── instance/         # Base de données SQLite
-├── docker-compose.yml # Configuration Docker Compose
-├── Dockerfile        # Configuration Docker
-├── requirements.txt  # Dépendances Python
-└── run.py           # Point d'entrée
+│   ├── templates/      # HTML templates
+│   ├── translations/   # Translation files
+│   │   ├── en/        # English translations
+│   │   └── fr/        # French translations
+│   ├── utils.py       # Utilities
+│   ├── routes.py      # Flask routes
+│   └── __init__.py    # Flask configuration
+├── zebra_emulator/    # Printer emulator
+├── instance/         # SQLite database
+├── docker-compose.yml # Docker Compose configuration
+├── Dockerfile        # Docker configuration
+├── requirements.txt  # Python dependencies
+└── run.py           # Entry point
 ```
 
-## Développement
+## Development
 
-### Base de données
+### Database
 
-Les modèles SQLAlchemy définissent trois tables principales :
-- `Template` : Modèles d'étiquettes
-- `Printer` : Configuration des imprimantes
-- `PrintHistory` : Historique des impressions
+SQLAlchemy models define three main tables:
+- `Template`: Label templates
+- `Printer`: Printer configuration
+- `PrintHistory`: Print history
 
-### API REST
+### REST API
 
-L'application expose plusieurs endpoints REST :
-- `/api/templates` : Gestion des modèles
-- `/api/printers` : Gestion des imprimantes
-- `/api/preview` : Prévisualisation des étiquettes
-- `/api/print` : Impression d'étiquettes
-- `/api/upload` : Import de fichiers
+The application exposes several REST endpoints:
+- `/api/templates`: Template management
+- `/api/printers`: Printer management
+- `/api/preview`: Label preview
+- `/api/print`: Label printing
+- `/api/upload`: File import
 
-### Traductions
+### Translations
 
-L'application utilise Flask-Babel pour la gestion des traductions. Les fichiers de traduction se trouvent dans le dossier `app/translations/`.
+The application uses Flask-Babel for translation management. Translation files are located in the `app/translations/` folder.
 
-Pour mettre à jour les traductions :
+To update translations:
 ```bash
-# Extraire les chaînes à traduire
+# Extract strings to translate
 pybabel extract -F babel.cfg -o app/translations/messages.pot .
 
-# Mettre à jour les fichiers de traduction
+# Update translation files
 pybabel update -i app/translations/messages.pot -d app/translations
 
-# Compiler les traductions
+# Compile translations
 pybabel compile -d app/translations
 ```
 
-## Licence
+## License
 
 MIT

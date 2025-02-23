@@ -12,7 +12,7 @@ def get_locale():
     # Utiliser la langue stockée en session si elle existe
     if 'language' in session:
         return session['language']
-    return request.accept_languages.best_match(['fr', 'en'])
+    return request.accept_languages.best_match(['en', 'fr'])
 
 def create_app():
     app = Flask(__name__)
@@ -23,8 +23,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Configuration Babel
-    app.config['BABEL_DEFAULT_LOCALE'] = 'fr'
-    app.config['BABEL_SUPPORTED_LOCALES'] = ['fr', 'en']
+    app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+    app.config['BABEL_SUPPORTED_LOCALES'] = ['en', 'fr']
     
     # Initialisation des extensions
     db.init_app(app)

@@ -699,7 +699,7 @@ function updatePrintSelectedButton() {
         <span class="icon">
             <i class="fas fa-print"></i>
         </span>
-        <span>Imprimer la sélection${selectedCount > 0 ? ` (${selectedCount})` : ''}</span>
+        ${selectedCount > 0 ? `<span>(${selectedCount})</span>` : ''}
     `;
 }
 
@@ -805,8 +805,7 @@ async function printLabel(rowIndex) {
 
         const result = await response.json();
         if (result.success) {
-            const printBtn = document.querySelector('#printSelectedBtn span:not(.icon)').textContent.split('(')[0].trim();
-            alert(printBtn + ' envoyée avec succès');
+            alert('Étiquette envoyée avec succès');
         } else {
             alert('Erreur lors de l\'impression: ' + result.message);
         }

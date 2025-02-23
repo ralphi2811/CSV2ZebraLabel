@@ -1,188 +1,568 @@
 # English translations for CSV2ZebraLabel.
 # Copyright (C) 2024 Raphaël Auberlet
-# This file is distributed under the same license as the CSV2ZebraLabel project.
+# This file is distributed under the same license as the CSV2ZebraLabel
+# project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0.0\n"
+"Project-Id-Version:  1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-23 14:13+0400\n"
+"POT-Creation-Date: 2025-02-23 15:33+0400\n"
 "PO-Revision-Date: 2024-02-23 14:13+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
 "Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
 
-msgid "CSV2ZebraLabel"
-msgstr "CSV2ZebraLabel"
-
+#: app/templates/index.html:32 app/templates/zpl_doc.html:32
+#: app/templates/zpl_doc.html:41
 msgid "Documentation ZPL"
 msgstr "ZPL Documentation"
 
+#: app/templates/index.html:45
 msgid "Import de données"
 msgstr "Data Import"
 
+#: app/templates/index.html:49
 msgid "Première ligne comme en-tête"
 msgstr "First line as header"
 
+#: app/templates/index.html:56
 msgid "Glissez votre fichier CSV/Excel ici"
 msgstr "Drop your CSV/Excel file here"
 
+#: app/templates/index.html:61
 msgid "Choisir un fichier"
 msgstr "Choose a file"
 
+#: app/templates/index.html:70
 msgid "Modèles d'étiquettes"
 msgstr "Label Templates"
 
+#: app/templates/index.html:75
 msgid "Nouveau modèle"
 msgstr "New Template"
 
+#: app/templates/index.html:84
 msgid "Imprimantes"
 msgstr "Printers"
 
+#: app/templates/index.html:89 app/templates/index.html:227
 msgid "Nouvelle imprimante"
 msgstr "New Printer"
 
+#: app/templates/index.html:102
 msgid "Données importées"
 msgstr "Imported Data"
 
-msgid "Imprimer la sélection"
+#: app/templates/index.html:109
+msgid "Imprimer la Sélection"
 msgstr "Print Selection"
 
-msgid "Documentation ZPL - CSV2ZebraLabel"
-msgstr "ZPL Documentation - CSV2ZebraLabel"
-
-msgid "Guide de base du langage ZPL (Zebra Programming Language)"
-msgstr "Basic Guide to ZPL (Zebra Programming Language)"
-
-msgid "Introduction"
-msgstr "Introduction"
-
-msgid "Le ZPL (Zebra Programming Language) est un langage de programmation créé par Zebra Technologies pour contrôler leurs imprimantes d'étiquettes. Chaque commande ZPL commence par le caractère ^ (circonflexe)."
-msgstr "ZPL (Zebra Programming Language) is a programming language created by Zebra Technologies to control their label printers. Each ZPL command starts with the ^ (caret) character."
-
-msgid "Structure de base"
-msgstr "Basic Structure"
-
-msgid "Commandes essentielles"
-msgstr "Essential Commands"
-
-msgid "Position et orientation"
-msgstr "Position and Orientation"
-
-msgid "Commande"
-msgstr "Command"
-
-msgid "Description"
-msgstr "Description"
-
-msgid "Exemple"
-msgstr "Example"
-
-msgid "Position de départ (Field Origin)"
-msgstr "Starting Position (Field Origin)"
-
-msgid "Orientation de l'étiquette"
-msgstr "Label Orientation"
-
-msgid "Texte et polices"
-msgstr "Text and Fonts"
-
-msgid "Données du champ (Field Data)"
-msgstr "Field Data"
-
-msgid "Police et taille"
-msgstr "Font and Size"
-
-msgid "Bloc de texte avec retour à la ligne"
-msgstr "Text Block with Line Break"
-
-msgid "Codes-barres"
-msgstr "Barcodes"
-
-msgid "Paramètres du code-barres"
-msgstr "Barcode Parameters"
-
-msgid "Exemple complet"
-msgstr "Complete Example"
-
-msgid "Cet exemple crée une étiquette avec :"
-msgstr "This example creates a label with:"
-
-msgid "Un champ \"Nom\" à la position (50,50)"
-msgstr "A \"Name\" field at position (50,50)"
-
-msgid "Un champ \"Prénom\" à la position (50,100)"
-msgstr "A \"First Name\" field at position (50,100)"
-
-msgid "Un code-barres Code 128 à la position (50,150)"
-msgstr "A Code 128 barcode at position (50,150)"
-
-msgid "Variables"
-msgstr "Variables"
-
-msgid "Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) qui seront remplacées par les valeurs des colonnes de votre fichier CSV/Excel :"
-msgstr "In CSV2ZebraLabel, you can use variables ($1, $2, etc.) that will be replaced by the values from your CSV/Excel file columns:"
-
-msgid "première colonne"
-msgstr "first column"
-
-msgid "deuxième colonne"
-msgstr "second column"
-
-msgid "Pour plus d'informations sur le langage ZPL, consultez la"
-msgstr "For more information about the ZPL language, check the"
-
-msgid "documentation officielle Zebra"
-msgstr "official Zebra documentation"
-
+#: app/templates/index.html:138
 msgid "Nouveau modèle d'étiquette"
 msgstr "New Label Template"
 
+#: app/templates/index.html:143 app/templates/index.html:145
 msgid "Nom du modèle"
 msgstr "Template Name"
 
+#: app/templates/index.html:151
 msgid "Largeur"
 msgstr "Width"
 
+#: app/templates/index.html:159 app/templates/index.html:177
 msgid "pouces"
 msgstr "inches"
 
+#: app/templates/index.html:169
 msgid "Hauteur"
 msgstr "Height"
 
+#: app/templates/index.html:201 app/templates/index.html:267
 msgid "Code ZPL"
 msgstr "ZPL Code"
 
+#: app/templates/index.html:210
 msgid "Prévisualiser"
 msgstr "Preview"
 
+#: app/templates/index.html:216 app/templates/index.html:251
 msgid "Enregistrer"
 msgstr "Save"
 
+#: app/templates/index.html:217 app/templates/index.html:252
 msgid "Annuler"
 msgstr "Cancel"
 
-msgid "Nouvelle imprimante"
-msgstr "New Printer"
-
+#: app/templates/index.html:232 app/templates/index.html:234
 msgid "Nom de l'imprimante"
 msgstr "Printer Name"
 
+#: app/templates/index.html:238
 msgid "Adresse IP"
 msgstr "IP Address"
 
+#: app/templates/index.html:244
 msgid "Port"
 msgstr "Port"
 
+#: app/templates/index.html:262 app/templates/index.html:273
 msgid "Prévisualisation de l'étiquette"
 msgstr "Label Preview"
 
+#: app/templates/index.html:278
 msgid "Fermer"
 msgstr "Close"
 
+#: app/templates/index.html:286
 msgid "Modifier"
 msgstr "Edit"
+
+#: app/templates/zpl_doc.html:42
+msgid "Guide de base du langage ZPL (Zebra Programming Language)"
+msgstr "Basic Guide to ZPL (Zebra Programming Language)"
+
+#: app/templates/zpl_doc.html:45
+msgid "Introduction"
+msgstr "Introduction"
+
+#: app/templates/zpl_doc.html:46
+msgid ""
+"Le ZPL (Zebra Programming Language) est un langage de programmation créé "
+"par Zebra Technologies pour contrôler leurs imprimantes d'étiquettes. "
+"Chaque commande ZPL commence par le caractère ^ (circonflexe)."
+msgstr ""
+"ZPL (Zebra Programming Language) is a programming language created by "
+"Zebra Technologies to control their label printers. Each ZPL command "
+"starts with the ^ (caret) character."
+
+#: app/templates/zpl_doc.html:48
+msgid "Structure de base"
+msgstr "Basic Structure"
+
+#: app/templates/zpl_doc.html:50
+#, fuzzy
+msgid "Début de l'étiquette"
+msgstr "Label Preview"
+
+#: app/templates/zpl_doc.html:51
+#, fuzzy
+msgid "Commandes ZPL"
+msgstr "Command"
+
+#: app/templates/zpl_doc.html:52
+#, fuzzy
+msgid "Fin de l'étiquette"
+msgstr "Label Orientation"
+
+#: app/templates/zpl_doc.html:55
+msgid "Commandes essentielles"
+msgstr "Essential Commands"
+
+#: app/templates/zpl_doc.html:57
+msgid "Position et orientation"
+msgstr "Position and Orientation"
+
+#: app/templates/zpl_doc.html:62 app/templates/zpl_doc.html:87
+#: app/templates/zpl_doc.html:117
+msgid "Commande"
+msgstr "Command"
+
+#: app/templates/zpl_doc.html:63 app/templates/zpl_doc.html:88
+#: app/templates/zpl_doc.html:118
+msgid "Description"
+msgstr "Description"
+
+#: app/templates/zpl_doc.html:64 app/templates/zpl_doc.html:89
+#: app/templates/zpl_doc.html:119
+msgid "Exemple"
+msgstr "Example"
+
+#: app/templates/zpl_doc.html:70
+msgid "Position de départ (Field Origin)"
+msgstr "Starting Position (Field Origin)"
+
+#: app/templates/zpl_doc.html:75
+msgid "Orientation de l'étiquette"
+msgstr "Label Orientation"
+
+#: app/templates/zpl_doc.html:82
+msgid "Texte et polices"
+msgstr "Text and Fonts"
+
+#: app/templates/zpl_doc.html:95
+msgid "Données du champ (Field Data)"
+msgstr "Field Data"
+
+#: app/templates/zpl_doc.html:100
+msgid "Police et taille"
+msgstr "Font and Size"
+
+#: app/templates/zpl_doc.html:105
+msgid "Bloc de texte avec retour à la ligne"
+msgstr "Text Block with Line Break"
+
+#: app/templates/zpl_doc.html:112
+msgid "Codes-barres"
+msgstr "Barcodes"
+
+#: app/templates/zpl_doc.html:125
+msgid "Paramètres du code-barres"
+msgstr "Barcode Parameters"
+
+#: app/templates/zpl_doc.html:142
+msgid "Exemple complet"
+msgstr "Complete Example"
+
+#: app/templates/zpl_doc.html:150
+msgid "Cet exemple crée une étiquette avec :"
+msgstr "This example creates a label with:"
+
+#: app/templates/zpl_doc.html:152
+msgid "Un champ \"Nom\" à la position (50,50)"
+msgstr "A \"Name\" field at position (50,50)"
+
+#: app/templates/zpl_doc.html:153
+msgid "Un champ \"Prénom\" à la position (50,100)"
+msgstr "A \"First Name\" field at position (50,100)"
+
+#: app/templates/zpl_doc.html:154
+msgid "Un code-barres Code 128 à la position (50,150)"
+msgstr "A Code 128 barcode at position (50,150)"
+
+#: app/templates/zpl_doc.html:158
+msgid "Variables"
+msgstr "Variables"
+
+#: app/templates/zpl_doc.html:159
+msgid ""
+"Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) "
+"qui seront remplacées par les valeurs des colonnes de votre fichier "
+"CSV/Excel :"
+msgstr ""
+"In CSV2ZebraLabel, you can use variables ($1, $2, etc.) that will be "
+"replaced by the values from your CSV/Excel file columns:"
+
+#: app/templates/zpl_doc.html:161
+msgid "première colonne"
+msgstr "first column"
+
+#: app/templates/zpl_doc.html:162
+msgid "deuxième colonne"
+msgstr "second column"
+
+#: app/templates/zpl_doc.html:167
+msgid "Pour plus d'informations sur le langage ZPL, consultez la"
+msgstr "For more information about the ZPL language, check the"
+
+#: app/templates/zpl_doc.html:167
+msgid "documentation officielle Zebra"
+msgstr "official Zebra documentation"
+
+#: venv/lib/python3.10/site-packages/click/_termui_impl.py:556
+#, python-brace-format
+msgid "{editor}: Editing failed"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/_termui_impl.py:560
+#, python-brace-format
+msgid "{editor}: Editing failed: {e}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1124
+msgid "Aborted!"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1349
+#: venv/lib/python3.10/site-packages/click/core.py:1379
+#, python-brace-format
+msgid "(Deprecated) {text}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1396
+msgid "Options"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1422
+#, python-brace-format
+msgid "Got unexpected extra argument ({args})"
+msgid_plural "Got unexpected extra arguments ({args})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1438
+#, python-brace-format
+msgid "DeprecationWarning: The command {name!r} is deprecated."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1645
+#, fuzzy
+msgid "Commands"
+msgstr "Command"
+
+#: venv/lib/python3.10/site-packages/click/core.py:1677
+msgid "Missing command."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:1755
+#, python-brace-format
+msgid "No such command {name!r}."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:2313
+msgid "Value must be an iterable."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:2334
+#, python-brace-format
+msgid "Takes {nargs} values but 1 was given."
+msgid_plural "Takes {nargs} values but {len} were given."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:2783
+#, python-brace-format
+msgid "env var: {var}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:2813
+msgid "(dynamic)"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:2828
+#, python-brace-format
+msgid "default: {default}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/core.py:2841
+msgid "required"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/decorators.py:457
+#, python-format
+msgid "%(prog)s, version %(version)s"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/decorators.py:520
+msgid "Show the version and exit."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/decorators.py:541
+msgid "Show this message and exit."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:49
+#: venv/lib/python3.10/site-packages/click/exceptions.py:88
+#, python-brace-format
+msgid "Error: {message}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:80
+#, python-brace-format
+msgid "Try '{command} {option}' for help."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:129
+#, python-brace-format
+msgid "Invalid value: {message}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:131
+#, python-brace-format
+msgid "Invalid value for {param_hint}: {message}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:187
+msgid "Missing argument"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:189
+msgid "Missing option"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:191
+msgid "Missing parameter"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:193
+#, python-brace-format
+msgid "Missing {param_type}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:200
+#, python-brace-format
+msgid "Missing parameter: {param_name}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:220
+#, python-brace-format
+msgid "No such option: {name}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:232
+#, python-brace-format
+msgid "Did you mean {possibility}?"
+msgid_plural "(Possible options: {possibilities})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:270
+msgid "unknown error"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/exceptions.py:277
+#, python-brace-format
+msgid "Could not open file {filename!r}: {message}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/parser.py:233
+#, python-brace-format
+msgid "Argument {name!r} takes {nargs} values."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/parser.py:415
+#, python-brace-format
+msgid "Option {name!r} does not take a value."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/parser.py:476
+#, python-brace-format
+msgid "Option {name!r} requires an argument."
+msgid_plural "Option {name!r} requires {nargs} arguments."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.10/site-packages/click/shell_completion.py:326
+msgid "Shell completion is not supported for Bash versions older than 4.4."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/shell_completion.py:333
+msgid "Couldn't detect Bash version, shell completion is not supported."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/termui.py:158
+msgid "Repeat for confirmation"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/termui.py:174
+msgid "Error: The value you entered was invalid."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/termui.py:176
+#, python-brace-format
+msgid "Error: {e.message}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/termui.py:187
+msgid "Error: The two entered values do not match."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/termui.py:243
+msgid "Error: invalid input"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/termui.py:773
+msgid "Press any key to continue..."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:267
+#, python-brace-format
+msgid ""
+"Choose from:\n"
+"\t{choices}"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:299
+#, python-brace-format
+msgid "{value!r} is not {choice}."
+msgid_plural "{value!r} is not one of {choices}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:393
+#, python-brace-format
+msgid "{value!r} does not match the format {format}."
+msgid_plural "{value!r} does not match the formats {formats}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:415
+#, python-brace-format
+msgid "{value!r} is not a valid {number_type}."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:471
+#, python-brace-format
+msgid "{value} is not in the range {range}."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:612
+#, python-brace-format
+msgid "{value!r} is not a valid boolean."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:636
+#, python-brace-format
+msgid "{value!r} is not a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:826
+msgid "file"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:828
+msgid "directory"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:830
+msgid "path"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:881
+#, python-brace-format
+msgid "{name} {filename!r} does not exist."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:890
+#, python-brace-format
+msgid "{name} {filename!r} is a file."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:898
+#, python-brace-format
+msgid "{name} {filename!r} is a directory."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:907
+#, python-brace-format
+msgid "{name} {filename!r} is not readable."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:916
+#, python-brace-format
+msgid "{name} {filename!r} is not writable."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:925
+#, python-brace-format
+msgid "{name} {filename!r} is not executable."
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/click/types.py:992
+#, python-brace-format
+msgid "{len_type} values are required, but {len_value} was given."
+msgid_plural "{len_type} values are required, but {len_value} were given."
+msgstr[0] ""
+msgstr[1] ""
+
+#~ msgid "CSV2ZebraLabel"
+#~ msgstr "CSV2ZebraLabel"
+
+#~ msgid "Documentation ZPL - CSV2ZebraLabel"
+#~ msgstr "ZPL Documentation - CSV2ZebraLabel"
