@@ -10,8 +10,36 @@ Ce document explique comment utiliser l'application CSV2ZebraLabel avec Docker.
 ## Installation
 
 1. Option A - Utiliser l'image Docker Hub :
+
+Vous pouvez utiliser ce docker-compose.yml optimisé pour l'image Docker Hub :
+```yaml
+version: '3.8'
+
+services:
+  web:
+    # Utilisation de l'image Docker Hub officielle
+    image: ralphi2811/csv2zebralabel:latest
+    container_name: csv2zebralabel
+    ports:
+      - "5000:5000"
+    volumes:
+      # Volume pour la persistance de la base de données SQLite
+      - db_data:/app/instance
+    environment:
+      - FLASK_APP=run.py
+      - FLASK_ENV=production
+      # Configuration de la base de données (SQLite par défaut)
+      - DATABASE_URL=sqlite:///db.sqlite
+    restart: unless-stopped
+
+# Définition du volume Docker nommé pour une meilleure gestion
+volumes:
+  db_data:
+    name: csv2zebralabel_db
+```
+
+Puis lancez avec :
 ```bash
-docker pull ralphi2811/csv2zebralabel:latest
 docker compose up -d
 ```
 
