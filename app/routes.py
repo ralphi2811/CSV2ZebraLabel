@@ -14,6 +14,11 @@ def index():
     """Page principale de l'application"""
     return render_template('index.html')
 
+@main_bp.route('/zpl-doc')
+def zpl_doc():
+    """Documentation du langage ZPL"""
+    return render_template('zpl_doc.html')
+
 @main_bp.route('/api/templates', methods=['GET', 'POST', 'DELETE'])
 def handle_templates():
     """Gestion des modèles ZPL"""
@@ -52,14 +57,21 @@ def preview_label():
 
     # Récupération du template et de ses paramètres
     template_id = data.get('template_id')
-    if not template_id:
-        return jsonify({"success": False, "error": "ID du template manquant"}), 400
-
-    template = Template.query.get_or_404(template_id)
-    zpl = template.zpl_code
-    dpmm = template.dpmm
-    width = template.width
-    height = template.height
+    if template_id:
+        template = Template.query.get_or_404(template_id)
+        zpl = template.zpl_code
+        dpmm = template.dpmm
+        width = template.width
+        height = template.height
+    else:
+        # Cas de la prévisualisation directe depuis l'éditeur
+        template_data = data.get('template')
+        if not template_data:
+            return jsonify({"success": False, "error": "Données du template manquantes"}), 400
+        zpl = template_data['zpl_code']
+        dpmm = template_data['dpmm']
+        width = template_data['width']
+        height = template_data['height']
 
     # Remplacement des variables si présentes
     if 'data' in data:

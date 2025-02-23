@@ -212,6 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chargement initial des données
     loadTemplates();
     loadPrinters();
+
+    // Gestionnaire d'événements pour le bouton de prévisualisation dans l'éditeur
+    document.getElementById('previewTemplateBtn').addEventListener('click', previewTemplateZPL);
 });
 
 // Fonctions de chargement des données
@@ -494,6 +497,64 @@ function updateTable(data) {
 }
 
 // Fonctions de prévisualisation et d'impression
+async function previewTemplateZPL() {
+    const zpl = document.getElementById('templateZPL').value;
+    if (!zpl) {
+        alert('Veuillez saisir un code ZPL');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/preview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                template: {
+                    zpl_code: zpl,
+                    width: document.getElementById('templateWidthUnit').value === 'in' ? 
+                        parseFloat(document.getElementById('templateWidth').value) : 
+                        mmToInches(parseFloat(document.getElementById('templateWidth').value)),
+                    height: document.getElementById('templateHeightUnit').value === 'in' ? 
+                        parseFloat(document.getElementById('templateHeight').value) : 
+                        mmToInches(parseFloat(document.getElementById('templateHeight').value)),
+                    dpmm: parseInt(document.getElementById('templateDPI').value)
+                }
+            })
+        });
+
+        const result = await response.json();
+        const previewError = document.getElementById('previewError');
+        
+        if (response.ok && result.success) {
+            document.getElementById('previewImage').src = 'data:image/png;base64,' + btoa(result.image);
+            previewError.classList.add('is-hidden');
+        } else {
+            document.getElementById('previewImage').src = '';
+            previewError.textContent = result.error || 'Erreur lors de la génération de l\'aperçu';
+            previewError.classList.remove('is-hidden');
+        }
+
+        openModal('previewModal');
+
+        // Ajouter le gestionnaire d'événements pour le clic sur l'image
+        const previewImage = document.getElementById('previewImage');
+        previewImage.onclick = function() {
+            this.classList.toggle('is-fullscreen');
+        };
+
+        // Afficher le code ZPL
+        document.getElementById('previewZPL').value = zpl;
+    } catch (error) {
+        console.error('Erreur:', error);
+        const previewError = document.getElementById('previewError');
+        previewError.textContent = 'Erreur lors de la génération de l\'aperçu';
+        previewError.classList.remove('is-hidden');
+        openModal('previewModal');
+    }
+}
+
 async function previewLabel(rowIndex) {
     if (!window.selectedTemplateId) {
         alert('Veuillez sélectionner un modèle d\'étiquette');
@@ -555,6 +616,12 @@ async function previewLabel(rowIndex) {
         }
 
         openModal('previewModal');
+
+        // Ajouter le gestionnaire d'événements pour le clic sur l'image
+        const previewImage = document.getElementById('previewImage');
+        previewImage.onclick = function() {
+            this.classList.toggle('is-fullscreen');
+        };
     } catch (error) {
         console.error('Erreur:', error);
         const previewError = document.getElementById('previewError');

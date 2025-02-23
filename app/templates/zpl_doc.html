@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation ZPL - CSV2ZebraLabel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- En-tête -->
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <strong>CSV2ZebraLabel</strong>
+            </a>
+        </div>
+
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <a class="navbar-item" href="/zpl-doc">
+                    <span class="icon">
+                        <i class="fas fa-book"></i>
+                    </span>
+                    <span>Documentation ZPL</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Documentation ZPL</h1>
+            <p class="subtitle">Guide de base du langage ZPL (Zebra Programming Language)</p>
+
+            <div class="content">
+                <h2>Introduction</h2>
+                <p>Le ZPL (Zebra Programming Language) est un langage de programmation créé par Zebra Technologies pour contrôler leurs imprimantes d'étiquettes. Chaque commande ZPL commence par le caractère ^ (circonflexe).</p>
+
+                <h2>Structure de base</h2>
+                <div class="box">
+                    <pre><code>^XA  // Début de l'étiquette
+^...  // Commandes ZPL
+^XZ  // Fin de l'étiquette</code></pre>
+                </div>
+
+                <h2>Commandes essentielles</h2>
+                
+                <h3>Position et orientation</h3>
+                <div class="table-container">
+                    <table class="table is-striped">
+                        <thead>
+                            <tr>
+                                <th>Commande</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>^FO</code></td>
+                                <td>Position de départ (Field Origin)</td>
+                                <td><code>^FO50,50</code> (x=50, y=50)</td>
+                            </tr>
+                            <tr>
+                                <td><code>^FW</code></td>
+                                <td>Orientation de l'étiquette</td>
+                                <td><code>^FWN</code> (Normal), <code>^FWR</code> (Rotation 90°)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Texte et polices</h3>
+                <div class="table-container">
+                    <table class="table is-striped">
+                        <thead>
+                            <tr>
+                                <th>Commande</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>^FD</code></td>
+                                <td>Données du champ (Field Data)</td>
+                                <td><code>^FDHello World</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>^CF</code></td>
+                                <td>Police et taille</td>
+                                <td><code>^CF0,30</code> (Police 0, hauteur 30)</td>
+                            </tr>
+                            <tr>
+                                <td><code>^FB</code></td>
+                                <td>Bloc de texte avec retour à la ligne</td>
+                                <td><code>^FB300,3</code> (Largeur 300, max 3 lignes)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Codes-barres</h3>
+                <div class="table-container">
+                    <table class="table is-striped">
+                        <thead>
+                            <tr>
+                                <th>Commande</th>
+                                <th>Description</th>
+                                <th>Exemple</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>^BY</code></td>
+                                <td>Paramètres du code-barres</td>
+                                <td><code>^BY3</code> (Largeur module = 3)</td>
+                            </tr>
+                            <tr>
+                                <td><code>^BC</code></td>
+                                <td>Code 128</td>
+                                <td><code>^BCN,100,Y,N</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>^BQ</code></td>
+                                <td>QR Code</td>
+                                <td><code>^BQN,2,4</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Exemple complet</h2>
+                <div class="box">
+                    <pre><code>^XA
+^FO50,50^CF0,30^FDNom: $1^FS
+^FO50,100^CF0,30^FDPrénom: $2^FS
+^FO50,150^BY3
+^BCN,100,Y,N^FD$3^FS
+^XZ</code></pre>
+                    <p class="help">Cet exemple crée une étiquette avec :</p>
+                    <ul>
+                        <li>Un champ "Nom" à la position (50,50)</li>
+                        <li>Un champ "Prénom" à la position (50,100)</li>
+                        <li>Un code-barres Code 128 à la position (50,150)</li>
+                    </ul>
+                </div>
+
+                <h2>Variables</h2>
+                <p>Dans CSV2ZebraLabel, vous pouvez utiliser des variables ($1, $2, etc.) qui seront remplacées par les valeurs des colonnes de votre fichier CSV/Excel :</p>
+                <ul>
+                    <li>$1 = première colonne</li>
+                    <li>$2 = deuxième colonne</li>
+                    <li>etc.</li>
+                </ul>
+
+                <div class="notification is-info">
+                    <p>Pour plus d'informations sur le langage ZPL, consultez la <a href="https://www.zebra.com/content/dam/zebra/manuals/printers/common/programming/zpl-zbi2-pm-en.pdf" target="_blank">documentation officielle Zebra</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>CSV2ZebraLabel</strong> v1.0.0 par <a href="https://github.com/ralphi2811">Raphaël Auberlet</a>
+                <br>
+                <a href="https://github.com/ralphi2811/CSV2ZebraLabel">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    Code source sur GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -164,12 +164,18 @@
 }
 
 #previewImage {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
     border: 1px solid #dbdbdb;
     border-radius: 4px;
     padding: 1rem;
     background-color: white;
+    cursor: pointer;
+    transition: max-width 0.3s ease;
+}
+
+#previewImage.is-fullscreen {
+    max-width: 100%;
 }
 
 #previewZPL {
