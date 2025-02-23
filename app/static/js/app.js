@@ -237,8 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTemplates();
     loadPrinters();
 
-    // Gestionnaire d'événements pour le bouton de prévisualisation dans l'éditeur
-    document.getElementById('previewTemplateBtn').addEventListener('click', previewTemplateZPL);
 });
 
 // Fonctions de chargement des données
@@ -526,8 +524,9 @@ function updateTable(data) {
 async function previewTemplateZPL() {
     const zpl = document.getElementById('templateZPL').value;
     if (!zpl) {
-        const zplLabel = document.querySelector('label[for="templateZPL"]').textContent;
-        alert('Veuillez saisir un ' + zplLabel);
+        const zplLabel = document.querySelector('label[for="templateZPL"]');
+        const labelText = zplLabel ? zplLabel.textContent : 'code ZPL';
+        alert('Veuillez saisir un ' + labelText);
         return;
     }
 
