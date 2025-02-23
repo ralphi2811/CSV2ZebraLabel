@@ -2,12 +2,22 @@ import pandas as pd
 import socket
 from typing import Tuple, List, Dict, Any
 
-def read_file_data(file) -> Tuple[List[str], List[List[Any]]]:
-    """Lit un fichier CSV ou Excel et retourne les en-têtes et les données"""
+def read_file_data(file, include_header: bool = True) -> Tuple[List[str], List[List[Any]]]:
+    """Lit un fichier CSV ou Excel et retourne les en-têtes et les données
+    
+    Args:
+        file: Le fichier à lire
+        include_header: Si True, considère la première ligne comme en-tête
+                       Si False, utilise des colonnes numérotées et inclut la première ligne dans les données
+    """
     if file.filename.endswith('.csv'):
-        df = pd.read_csv(file)
+        df = pd.read_csv(file, header=0 if include_header else None)
     else:  # Excel
-        df = pd.read_excel(file)
+        df = pd.read_excel(file, header=0 if include_header else None)
+    
+    if not include_header:
+        # Si pas d'en-tête, on crée des noms de colonnes numérotés
+        df.columns = [f"Colonne {i+1}" for i in range(len(df.columns))]
     
     return df.columns.tolist(), df.values.tolist()
 

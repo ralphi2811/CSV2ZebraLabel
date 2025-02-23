@@ -181,8 +181,11 @@ def upload_file():
     if not (file.filename.endswith('.csv') or file.filename.endswith('.xlsx') or file.filename.endswith('.xls')):
         return jsonify({"error": "Format de fichier non supporté"}), 400
     
+    # Récupération du paramètre include_header (par défaut True)
+    include_header = request.form.get('include_header', 'true').lower() == 'true'
+    
     try:
-        headers, rows = read_file_data(file)
+        headers, rows = read_file_data(file, include_header)
         return jsonify({
             "success": True,
             "headers": headers,

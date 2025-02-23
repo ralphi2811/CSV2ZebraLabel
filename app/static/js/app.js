@@ -425,6 +425,7 @@ async function loadPrinters() {
 async function processFile(file) {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('include_header', document.getElementById('includeHeader').checked);
 
     try {
         const response = await fetch('/api/upload', {
