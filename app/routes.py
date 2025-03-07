@@ -19,6 +19,12 @@ def zpl_doc():
     """Documentation du langage ZPL"""
     return render_template('zpl_doc.html')
 
+@main_bp.route('/print-history')
+def print_history():
+    """Historique des impressions"""
+    history = PrintHistory.query.order_by(PrintHistory.created_at.desc()).all()
+    return render_template('print_history.html', history=history)
+
 @main_bp.route('/change-lang/<lang>')
 def change_lang(lang):
     """Change la langue de l'interface"""
@@ -252,3 +258,28 @@ def print_label():
         "message": "Impression envoyée avec succès",
         "history_id": history.id
     })
+
+@main_bp.route('/api/print-history/<int:history_id>', methods=['GET'])
+def get_print_history(history_id):
+    """Récupération des détails d'un historique d'impression"""
+    history = PrintHistory.query.get_or_404(history_id)
+    return jsonify({
+        "id": history.id,
+        "template_id": history.template_id,
+        "printer_id": history.printer_id,
+        "print_data": history.print_data,
+        "copies": history.copies,
+        "status": history.status,
+        "created_at": history.created_at.isoformat()
+    })
+
+@main_bp.route('/api/print-history/purge', methods=['DELETE'])
+def purge_print_history():
+    """Purge de l'historique des impressions"""
+    try:
+        PrintHistory.query.delete()
+        db.session.commit()
+        return jsonify({"success": True, "message": "Historique purgé avec succès"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "error": str(e)}), 500

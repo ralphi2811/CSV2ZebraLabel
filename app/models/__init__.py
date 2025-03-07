@@ -30,13 +30,13 @@ class PrintHistory(db.Model):
     __tablename__ = 'print_history'
     
     id = db.Column(db.Integer, primary_key=True)
-    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    printer_id = db.Column(db.Integer, db.ForeignKey('printers.id'), nullable=False)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id', ondelete='CASCADE'), nullable=False)
+    printer_id = db.Column(db.Integer, db.ForeignKey('printers.id', ondelete='CASCADE'), nullable=False)
     print_data = db.Column(db.JSON, nullable=False)  # Données utilisées pour l'impression
     copies = db.Column(db.Integer, default=1)
     status = db.Column(db.String(50), default='completed')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relations
-    template = db.relationship('Template', backref=db.backref('print_history', lazy=True))
-    printer = db.relationship('Printer', backref=db.backref('print_history', lazy=True))
+    template = db.relationship('Template', backref=db.backref('print_history', lazy=True, cascade='all, delete-orphan'))
+    printer = db.relationship('Printer', backref=db.backref('print_history', lazy=True, cascade='all, delete-orphan'))

@@ -1,0 +1,187 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ _('Historique des impressions') }} - CSV2ZebraLabel{% endblock %}
+
+{% block content %}
+<h1 class="title">{{ _('Historique des impressions') }}</h1>
+
+<div class="box">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <h2 class="subtitle">{{ _('Impressions récentes') }}</h2>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <button class="button is-danger" id="purgeHistoryBtn">
+                    <span class="icon">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span>{{ _('Purger l\'historique') }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+                <tr>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Modèle') }}</th>
+                    <th>{{ _('Imprimante') }}</th>
+                    <th>{{ _('Copies') }}</th>
+                    <th>{{ _('Statut') }}</th>
+                    <th>{{ _('Données') }}</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableData">
+                {% for entry in history %}
+                <tr>
+                    <td>{{ entry.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>{{ entry.template.name }}</td>
+                    <td>{{ entry.printer.name }}</td>
+                    <td>{{ entry.copies }}</td>
+                    <td>
+                        <span class="tag {% if entry.status == 'completed' %}is-success{% else %}is-danger{% endif %}">
+                            {{ _('Terminé') if entry.status == 'completed' else _('Échec') }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="button is-small is-info view-data" data-history-id="{{ entry.id }}">
+                            <span class="icon">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Données d'impression -->
+<div class="modal" id="printDataModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{ _('Données d\'impression') }}</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div id="printDataContent">
+                <!-- Contenu dynamique -->
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button">{{ _('Fermer') }}</button>
+        </footer>
+    </div>
+</div>
+
+<!-- Modal Confirmation de purge -->
+<div class="modal" id="purgeConfirmModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{{ _('Confirmation') }}</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <p>{{ _('Êtes-vous sûr de vouloir purger tout l\'historique des impressions ?') }}</p>
+            <p class="has-text-danger">{{ _('Cette action est irréversible.') }}</p>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-danger" id="confirmPurgeBtn">{{ _('Purger') }}</button>
+            <button class="button">{{ _('Annuler') }}</button>
+        </footer>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Gestion des modales
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('is-active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('is-active');
+        }
+
+        function closeAllModals() {
+            (document.querySelectorAll('.modal') || []).forEach(modal => {
+                modal.classList.remove('is-active');
+            });
+        }
+
+        // Fermeture des modales
+        document.querySelectorAll('.modal-background, .modal .delete, .modal .button:not(.is-danger)').forEach(element => {
+            element.addEventListener('click', () => {
+                closeAllModals();
+            });
+        });
+
+        // Affichage des données d'impression
+        document.querySelectorAll('.view-data').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const historyId = btn.dataset.historyId;
+                try {
+                    const response = await fetch(`/api/print-history/${historyId}`);
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        const printDataContent = document.getElementById('printDataContent');
+                        let htmlContent = '<div class="content">';
+                        
+                        // Afficher les données sous forme de table
+                        htmlContent += '<table class="table is-fullwidth">';
+                        htmlContent += '<thead><tr><th>Variable</th><th>Valeur</th></tr></thead>';
+                        htmlContent += '<tbody>';
+                        
+                        for (const [key, value] of Object.entries(data.print_data)) {
+                            htmlContent += `<tr><td>$${key}</td><td>${value}</td></tr>`;
+                        }
+                        
+                        htmlContent += '</tbody></table></div>';
+                        printDataContent.innerHTML = htmlContent;
+                        
+                        openModal('printDataModal');
+                    } else {
+                        alert('{{ _("Erreur lors de la récupération des données") }}');
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('{{ _("Erreur lors de la récupération des données") }}');
+                }
+            });
+        });
+
+        // Purge de l'historique
+        document.getElementById('purgeHistoryBtn').addEventListener('click', () => {
+            openModal('purgeConfirmModal');
+        });
+
+        document.getElementById('confirmPurgeBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/print-history/purge', {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('{{ _("Erreur lors de la purge de l\'historique") }}');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('{{ _("Erreur lors de la purge de l\'historique") }}');
+            }
+        });
+    });
+</script>
+{% endblock %}

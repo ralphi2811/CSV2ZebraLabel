@@ -1,43 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV2ZebraLabel</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <!-- En-tête -->
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                <strong>CSV2ZebraLabel</strong>
-            </a>
-        </div>
+{% extends "layout.html" %}
 
-        <div class="navbar-menu">
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-light" href="{{ url_for('main.change_lang', lang='fr') }}">FR</a>
-                        <a class="button is-light" href="{{ url_for('main.change_lang', lang='en') }}">EN</a>
-                    </div>
-                </div>
-                <a class="navbar-item" href="/zpl-doc">
-                    <span class="icon">
-                        <i class="fas fa-book"></i>
-                    </span>
-                    <span>{{ _('Documentation ZPL') }}</span>
-                </a>
-            </div>
-        </div>
-    </nav>
+{% block title %}CSV2ZebraLabel{% endblock %}
 
-    <!-- Contenu principal -->
-    <section class="section">
-        <div class="container">
+{% block content %}
             <div class="columns">
                 <!-- Zone d'import de fichiers -->
                 <div class="column is-4">
@@ -125,10 +90,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+{% endblock %}
 
-    <!-- Modals -->
+{% block scripts %}
     <!-- Modal Nouveau modèle -->
     <div class="modal" id="templateModal">
         <div class="modal-background"></div>
@@ -282,21 +246,4 @@
         }
     </script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>
-                <strong>CSV2ZebraLabel</strong> v1.0.1 par <a href="https://github.com/ralphi2811">Raphaël Auberlet</a>
-                <br>
-                <a href="https://github.com/ralphi2811/CSV2ZebraLabel">
-                    <span class="icon">
-                        <i class="fab fa-github"></i>
-                    </span>
-                    Code source sur GitHub
-                </a>
-            </p>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock %}

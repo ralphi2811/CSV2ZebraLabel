@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 from pathlib import Path
 import os
+from app.config import APP_VERSION, DATABASE_CONFIG
 
 # Initialisation des extensions
 db = SQLAlchemy()
@@ -29,6 +30,11 @@ def create_app():
     # Initialisation des extensions
     db.init_app(app)
     babel.init_app(app, locale_selector=get_locale)
+    
+    # Ajouter la version de l'application aux templates
+    @app.context_processor
+    def inject_app_version():
+        return {'app_version': APP_VERSION}
     
     # Import et enregistrement des blueprints
     from app.routes import main_bp
